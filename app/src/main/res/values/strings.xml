@@ -8,4 +8,5 @@
     <string name="remaining_series">Remaining series</string>
     <string name="default_remaining_time">00:00</string>
     <string name="default_time">00</string>
+    <string name="default_series">1</string>
 </resources>

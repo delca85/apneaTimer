@@ -21,12 +21,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var toolbar: Toolbar? = null
     var time_in_minutes: EditText? = null
     var time_in_seconds: EditText? = null
+    var series_in: EditText? = null
     var separator: TextView? = null
-    var time_out: TextView? = null
     var remaining_time: TextView? = null            //shows the time
+    var remaining_series: TextView? = null            //shows the series
     var go_home_progress: CircularProgressBar? = null
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
+    var numberOfSeries: Int = 1                 //number of total series
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,19 +47,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             setTimer()
             buttonStopTime!!.visibility = View.VISIBLE
             buttonStartTime!!.visibility = View.GONE
-            time_in_minutes!!.visibility = View.GONE
-            time_in_seconds!!.visibility = View.GONE
-            separator!!.visibility = View.GONE
-            time_in_minutes!!.setText("")
-            time_in_seconds!!.setText("")
+            time_in_minutes!!.isEnabled = false
+            time_in_seconds!!.isEnabled = false
+            series_in!!.isEnabled = false
             startTimer()
         } else if (v!!.id == R.id.btnStopTime){
             mTimer!!.cancel()
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
-            time_in_minutes!!.visibility = View.VISIBLE
-            time_in_seconds!!.visibility = View.VISIBLE
-            separator!!.visibility = View.VISIBLE
+            time_in_minutes!!.isEnabled = true
+            time_in_seconds!!.isEnabled = true
+            series_in!!.isEnabled = true
         }
     }
 
@@ -65,11 +65,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
+        series_in = findViewById(R.id.series_in_number) as EditText
         separator = findViewById(R.id.separator) as TextView
-        time_out = findViewById(R.id.series_out) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
         buttonStopTime = findViewById(R.id.btnStopTime) as Button?
         remaining_time = findViewById(R.id.remaining_time) as TextView
+        remaining_series = findViewById(R.id.series_out) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
     }
 
@@ -86,6 +87,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.LENGTH_LONG).show()
 
         totalTimeCountMilliseconds = time * 1000L
+
+        if (!series_in!!.text.toString().equals(""))
+            numberOfSeries = series_in!!.text.toString().toInt()
     }
 
 
@@ -94,37 +98,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onTick(millisUntilFinished: Long) {
                 remaining_time?.text = toReadableTime(millisUntilFinished)
+                remaining_series?.text = numberOfSeries.toString()
                 go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished, totalTimeCountMilliseconds!!))
             }
 
             override fun onFinish() {
-                time_out?.text = getString(R.string.default_time)
                 remaining_time?.text =  "Bravo Bittino!"
                 go_home_progress?.progress = 0F
                 remaining_time!!.visibility = View.VISIBLE
+                remaining_series!!.visibility = View.VISIBLE
                 buttonStartTime!!.visibility = View.VISIBLE
                 buttonStopTime!!.visibility = View.GONE
                 time_in_minutes!!.visibility = View.VISIBLE
+                time_in_seconds!!.visibility = View.VISIBLE
                 time_in_seconds!!.visibility = View.VISIBLE
                 separator!!.visibility = View.VISIBLE
             }
         }.start()
 
-        /*if (didTimeStart(baseContext)) {
-            val remainingTime = getRemainingTime(baseContext)
-            if (remainingTime > 0) {
-//                time_in_minutes?.text = toHourMinFormat(getStartTime(baseContext))
-                time_out?.text = toHourMinFormat(getEndTime(baseContext))
-                remaining_time?.text = toReadableTime(remainingTime)
-                go_home_progress?.progress = 100F
-                mTimer?.start()
-            } else {
-//                time_in_minutes?.text = getString(R.string.default_time)
-                time_out?.text = getString(R.string.default_time)
-                remaining_time?.text = getString(R.string.default_remaining_time)
-                go_home_progress?.progress = 0F
-            }
-        }*/
     }
 
 }
