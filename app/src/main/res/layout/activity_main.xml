@@ -21,6 +21,33 @@
             android:minHeight="?attr/actionBarSize"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+        <Button
+            android:id="@+id/btnStartTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Start Timer" />
+        <Button
+            android:id="@+id/btnStopTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="Stop Timer"
+            android:visibility="gone" />
+        </LinearLayout>
+
+
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/fragment_timer" />

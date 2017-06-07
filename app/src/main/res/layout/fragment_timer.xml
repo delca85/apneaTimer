@@ -17,22 +17,58 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/time_in"
+        android:layout_above="@+id/time_in_minutes"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="@string/in_time"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:id="@+id/textView" />
 
-    <TextView
-        android:id="@+id/time_in"
+<!--    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/remaining_time"
+        android:layout_above="@+id/time_in_minutes"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="8dp"
-        android:text="@string/default_time"
-        android:textSize="30sp" />
+        android:text="@string/in_time"
+        android:textSize="16sp"
+        android:id="@+id/textViewSeries" />-->
+
+    <EditText
+        android:id="@+id/time_in_minutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/default_time"
+        android:textSize="30sp"
+        android:layout_above="@+id/remaining_time"
+        android:layout_toLeftOf="@+id/separator"
+        android:layout_toStartOf="@+id/separator"
+        android:imeOptions="actionDone"
+        android:maxLength="2"
+        android:inputType="phone"/>
+
+    <TextView
+        android:id="@+id/separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=":"
+        android:textSize="30sp"
+        android:layout_alignBaseline="@+id/time_in_seconds"
+        android:layout_alignBottom="@+id/time_in_seconds"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/time_in_seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/default_time"
+        android:textSize="30sp"
+        android:layout_below="@+id/textView"
+        android:layout_toRightOf="@+id/separator"
+        android:layout_toEndOf="@+id/separator"
+        android:imeOptions="actionDone"
+        android:maxLength="2"
+        android:inputType="phone"/>
 
     <TextView
         android:id="@+id/remaining_time"
@@ -60,7 +96,8 @@
         android:layout_below="@+id/time_out"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="@string/out_time"
-        android:textSize="16sp" />
+        android:text="@string/remaining_series"
+        android:textSize="16sp"
+        android:id="@+id/textView2" />
 
 </RelativeLayout>
