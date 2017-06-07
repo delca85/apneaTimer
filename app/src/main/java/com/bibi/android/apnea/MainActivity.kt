@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun startTimer() {
-        mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 1000) {
+        mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
                 remaining_time?.text = toReadableTime(millisUntilFinished)
@@ -103,18 +103,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
-                remaining_time?.text =  "Bravo Bittino!"
+                numberOfSeries--;
+                remaining_series!!.text = numberOfSeries.toString();
                 go_home_progress?.progress = 0F
-                remaining_time!!.visibility = View.VISIBLE
-                remaining_series!!.visibility = View.VISIBLE
-                buttonStartTime!!.visibility = View.VISIBLE
-                buttonStopTime!!.visibility = View.GONE
-                time_in_minutes!!.visibility = View.VISIBLE
-                time_in_seconds!!.visibility = View.VISIBLE
-                time_in_seconds!!.visibility = View.VISIBLE
-                separator!!.visibility = View.VISIBLE
+
+                if (numberOfSeries > 0)
+                    this.start()
+                else {
+                    remaining_time?.text =  "Bravo Bittino!"
+                    remaining_time!!.visibility = View.VISIBLE
+                    remaining_series!!.visibility = View.VISIBLE
+                    buttonStartTime!!.visibility = View.VISIBLE
+                    buttonStopTime!!.visibility = View.GONE
+                    time_in_minutes!!.visibility = View.VISIBLE
+                    time_in_seconds!!.visibility = View.VISIBLE
+                    time_in_minutes!!.isEnabled = true
+                    time_in_seconds!!.isEnabled = true
+                    series_in!!.visibility = View.VISIBLE
+                    series_in!!.isEnabled = true
+                    separator!!.visibility = View.VISIBLE
+                }
             }
         }.start()
+
+
 
     }
 
