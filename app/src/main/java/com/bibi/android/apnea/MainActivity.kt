@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -65,6 +67,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
+        time_in_seconds!!.addTextChangedListener(generateTwoDigitsWatcher())
         series_in = findViewById(R.id.series_in_number) as EditText
         separator = findViewById(R.id.separator) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
@@ -72,6 +75,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
+    }
+
+    private fun generateTwoDigitsWatcher(): TextWatcher? {
+        var tWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.length < 2) {
+                    var editableText = String.Companion.format(s.toString(), "%2d")
+                    time_in_seconds!!.setText(editableText)
+                }
+            }
+        }
+        return tWatcher
     }
 
     private fun setTimer() {
