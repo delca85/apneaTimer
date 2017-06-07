@@ -3,7 +3,7 @@
     <string name="app_name">ApneaTimer</string>
 
     <!-- Timer -->
-    <string name="in_time">Start Time</string>
+    <string name="in_time">Time</string>
     <string name="in_series">Series</string>
     <string name="remaining_series">Remaining series</string>
     <string name="default_remaining_time">00:00</string>

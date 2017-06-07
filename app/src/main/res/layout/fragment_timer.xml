@@ -8,31 +8,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_margin="30dp"
         app:cpb_background_progressbar_color="@color/colorProgressBackground"
         app:cpb_background_progressbar_width="20dp"
         app:cpb_progressbar_color="@color/colorAccent"
-        app:cpb_progressbar_width="15dp" />
+        app:cpb_progressbar_width="15dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/time_in_minutes"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="@string/in_time"
         android:textSize="16sp"
-        android:id="@+id/textView" />
+        android:id="@+id/textViewTime"
+        android:layout_alignTop="@+id/go_home_progress"
+        android:layout_alignLeft="@+id/time_in_minutes"
+        android:layout_alignStart="@+id/time_in_minutes"
+        android:layout_marginLeft="26dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="55dp" />
 
-<!--    <TextView
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/time_in_minutes"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/in_time"
+        android:text="@string/in_series"
         android:textSize="16sp"
-        android:id="@+id/textViewSeries" />-->
+        android:id="@+id/textViewSeries"
+        android:layout_alignBaseline="@+id/textViewTime"
+        android:layout_alignBottom="@+id/textViewTime"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/series_in_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/default_time"
+        android:textSize="30sp"
+        android:imeOptions="actionDone"
+        android:maxLength="2"
+        android:inputType="phone"
+        android:layout_alignBaseline="@+id/time_in_seconds"
+        android:layout_alignBottom="@+id/time_in_seconds"
+        android:layout_alignLeft="@+id/textViewSeries"
+        android:layout_alignStart="@+id/textViewSeries" />
 
     <EditText
         android:id="@+id/time_in_minutes"
@@ -40,12 +61,13 @@
         android:layout_height="wrap_content"
         android:hint="@string/default_time"
         android:textSize="30sp"
-        android:layout_above="@+id/remaining_time"
-        android:layout_toLeftOf="@+id/separator"
-        android:layout_toStartOf="@+id/separator"
         android:imeOptions="actionDone"
         android:maxLength="2"
-        android:inputType="phone"/>
+        android:inputType="phone"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/textViewTime"
+        android:layout_toLeftOf="@+id/separator"
+        android:layout_toStartOf="@+id/separator" />
 
     <TextView
         android:id="@+id/separator"
@@ -53,9 +75,10 @@
         android:layout_height="wrap_content"
         android:text=":"
         android:textSize="30sp"
-        android:layout_alignBaseline="@+id/time_in_seconds"
-        android:layout_alignBottom="@+id/time_in_seconds"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignBaseline="@+id/time_in_minutes"
+        android:layout_alignBottom="@+id/time_in_minutes"
+        android:layout_toLeftOf="@+id/remaining_time"
+        android:layout_toStartOf="@+id/remaining_time" />
 
     <EditText
         android:id="@+id/time_in_seconds"
@@ -63,41 +86,44 @@
         android:layout_height="wrap_content"
         android:hint="@string/default_time"
         android:textSize="30sp"
-        android:layout_below="@+id/textView"
-        android:layout_toRightOf="@+id/separator"
-        android:layout_toEndOf="@+id/separator"
         android:imeOptions="actionDone"
         android:maxLength="2"
-        android:inputType="phone"/>
+        android:inputType="phone"
+        android:layout_alignBaseline="@+id/separator"
+        android:layout_alignBottom="@+id/separator"
+        android:layout_toRightOf="@+id/separator"
+        android:layout_toEndOf="@+id/separator" />
 
     <TextView
         android:id="@+id/remaining_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="@string/default_remaining_time"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        android:layout_below="@+id/time_in_minutes"
+        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignStart="@+id/textView2"
+        android:layout_marginTop="36dp" />
 
     <TextView
-        android:id="@+id/time_out"
+        android:id="@+id/series_out"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/remaining_time"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
         android:text="@string/default_time"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_above="@+id/textView2"
+        android:layout_toRightOf="@+id/time_in_seconds"
+        android:layout_toEndOf="@+id/time_in_seconds"
+        android:layout_marginBottom="12dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/time_out"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:text="@string/remaining_series"
         android:textSize="16sp"
-        android:id="@+id/textView2" />
+        android:id="@+id/textView2"
+        android:layout_alignBottom="@+id/go_home_progress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="35dp" />
 
 </RelativeLayout>

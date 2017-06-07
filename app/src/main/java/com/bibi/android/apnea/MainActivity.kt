@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
         separator = findViewById(R.id.separator) as TextView
-        time_out = findViewById(R.id.time_out) as TextView
+        time_out = findViewById(R.id.series_out) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
         buttonStopTime = findViewById(R.id.btnStopTime) as Button?
         remaining_time = findViewById(R.id.remaining_time) as TextView
