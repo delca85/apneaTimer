@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             override fun onTick(millisUntilFinished: Long) {
                 remaining_time?.text = toReadableTime(millisUntilFinished)
                 remaining_series?.text = numberOfSeries.toString()
-                go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished, totalTimeCountMilliseconds!!))
+                go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished-500,
+                        totalTimeCountMilliseconds!!), 500)
             }
 
             override fun onFinish() {
@@ -122,6 +123,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_in!!.visibility = View.VISIBLE
                     series_in!!.isEnabled = true
                     separator!!.visibility = View.VISIBLE
+                    go_home_progress?.progress = 0F
                 }
             }
         }.start()
