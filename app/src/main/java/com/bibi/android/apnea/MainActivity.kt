@@ -74,28 +74,28 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
-        time_in_seconds!!.addTextChangedListener(generateTwoDigitsWatcher(time_in_seconds))
-        time_in_minutes!!.addTextChangedListener(generateTwoDigitsWatcher(time_in_minutes))
+        time_in_minutes!!.onFocusChangeListener = generateTwoDigitsWatcher()
+        time_in_seconds!!.onFocusChangeListener = generateTwoDigitsWatcher()
     }
 
-    private fun generateTwoDigitsWatcher(editText: EditText?): TextWatcher? {
-        var tWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                if (s!!.length == 1) {
-                    var text = "%02d".format(s.toString().toInt())
-                    editText!!.removeTextChangedListener(this)
-                    editText!!.setText(text)
+    private fun generateTwoDigitsWatcher(): View.OnFocusChangeListener? {
+        var focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+            if (!hasFocus){
+                when (v!!.id) {
+                    R.id.time_in_minutes ->
+                        if (time_in_minutes!!.text.length == 1) {
+                            var text = "%02d".format(time_in_minutes!!.text.toString().toInt())
+                            time_in_minutes!!.setText(text)
+                        }
+                    R.id.time_in_seconds ->
+                        if (time_in_seconds!!.text.length == 1) {
+                            var text = "%02d".format(time_in_seconds!!.text.toString().toInt())
+                            time_in_seconds!!.setText(text)
+                        }
                 }
-
             }
         }
-        return tWatcher
+        return focusChangeListener
     }
 
     private fun setTimer() {
@@ -115,7 +115,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (!series_in!!.text.toString().equals(""))
             numberOfSeries = series_in!!.text.toString().toInt()
     }
-
 
     private fun startTimer() {
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
