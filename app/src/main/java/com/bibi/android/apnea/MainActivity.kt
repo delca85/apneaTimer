@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.bibi.android.apnea.utils.*
+import com.bibi.android.apnea.utils.getPercentLeft
+import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             time_in_seconds!!.isEnabled = false
             series_in!!.isEnabled = false
             startTimer()
-        } else if (v!!.id == R.id.btnStopTime){
+        } else if (v.id == R.id.btnStopTime){
             mTimer!!.cancel()
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
@@ -79,17 +78,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun generateTwoDigitsWatcher(): View.OnFocusChangeListener? {
-        var focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
+        val focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus){
                 when (v!!.id) {
                     R.id.time_in_minutes ->
                         if (time_in_minutes!!.text.length == 1) {
-                            var text = "%02d".format(time_in_minutes!!.text.toString().toInt())
+                            val text = "%02d".format(time_in_minutes!!.text.toString().toInt())
                             time_in_minutes!!.setText(text)
                         }
                     R.id.time_in_seconds ->
                         if (time_in_seconds!!.text.length == 1) {
-                            var text = "%02d".format(time_in_seconds!!.text.toString().toInt())
+                            val text = "%02d".format(time_in_seconds!!.text.toString().toInt())
                             time_in_seconds!!.setText(text)
                         }
                 }
@@ -127,8 +126,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
-                numberOfSeries--;
-                remaining_series!!.text = numberOfSeries.toString();
+                numberOfSeries--
+                remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
 
                 if (numberOfSeries > 0)
