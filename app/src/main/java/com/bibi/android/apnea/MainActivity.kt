@@ -67,7 +67,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
-        time_in_seconds!!.addTextChangedListener(generateTwoDigitsWatcher())
         series_in = findViewById(R.id.series_in_number) as EditText
         separator = findViewById(R.id.separator) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
@@ -75,9 +74,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
+        time_in_seconds!!.addTextChangedListener(generateTwoDigitsWatcher(time_in_seconds))
+        time_in_minutes!!.addTextChangedListener(generateTwoDigitsWatcher(time_in_minutes))
     }
 
-    private fun generateTwoDigitsWatcher(): TextWatcher? {
+    private fun generateTwoDigitsWatcher(editText: EditText?): TextWatcher? {
         var tWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -86,10 +87,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s!!.length < 2) {
-                    var editableText = String.Companion.format(s.toString(), "%2d")
-                    time_in_seconds!!.setText(editableText)
+                if (s!!.length == 1) {
+                    var text = "%02d".format(s.toString().toInt())
+                    editText!!.removeTextChangedListener(this)
+                    editText!!.setText(text)
                 }
+
             }
         }
         return tWatcher
