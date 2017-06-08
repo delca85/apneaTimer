@@ -1,14 +1,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
+    >
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
         android:id="@+id/go_home_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        app:cpb_background_progressbar_color="@color/colorProgressBackground"
+        app:cpb_background_progressbar_color="#4400fb"
         app:cpb_background_progressbar_width="20dp"
         app:cpb_progressbar_color="@color/colorAccent"
         app:cpb_progressbar_width="15dp"
@@ -23,6 +25,7 @@
         android:text="@string/in_time"
         android:textSize="16sp"
         android:id="@+id/textViewTime"
+        android:textColor="#4400fb"
         android:layout_alignTop="@+id/go_home_progress"
         android:layout_alignLeft="@+id/time_in_minutes"
         android:layout_alignStart="@+id/time_in_minutes"
@@ -36,6 +39,7 @@
         android:text="@string/in_series"
         android:textSize="16sp"
         android:id="@+id/textViewSeries"
+        android:textColor="#4400fb"
         android:layout_alignTop="@+id/textViewTime"
         android:layout_alignBaseline="@+id/textViewTime"
         android:layout_alignBottom="@+id/textViewTime"
@@ -46,34 +50,39 @@
         android:id="@+id/series_in_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/default_series"
-        android:textSize="30sp"
-        android:imeOptions="actionDone"
-        android:maxLength="2"
-        android:inputType="number"
         android:layout_alignBaseline="@+id/time_in_seconds"
         android:layout_alignBottom="@+id/time_in_seconds"
         android:layout_below="@+id/textViewSeries"
+        android:layout_centerHorizontal="true"
         android:layout_toRightOf="@+id/textViewRemainingSeries"
-        android:layout_centerHorizontal="true"/>
+        android:hint="@string/default_series"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textColor="#4400fb"
+        android:textColorHint="#4400fb"
+        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/time_in_minutes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/default_time"
-        android:textSize="30sp"
-        android:imeOptions="actionDone"
-        android:maxLength="2"
-        android:inputType="number"
-        android:layout_marginTop="16dp"
         android:layout_below="@+id/textViewTime"
+        android:layout_marginTop="16dp"
         android:layout_toLeftOf="@+id/separator"
         android:layout_toStartOf="@+id/separator"
-        android:gravity="right"/>
+        android:gravity="right"
+        android:hint="@string/default_time"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textColor="#4400fb"
+        android:textColorHint="#4400fb"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/separator"
+        android:textColor="#4400fb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=":"
@@ -87,19 +96,22 @@
         android:id="@+id/time_in_seconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/default_time"
-        android:textSize="30sp"
-        android:imeOptions="actionDone"
-        android:maxLength="2"
-        android:inputType="number"
         android:layout_alignBaseline="@+id/separator"
         android:layout_alignBottom="@+id/separator"
-        android:layout_toRightOf="@+id/separator"
         android:layout_toEndOf="@+id/separator"
-        android:gravity="right"/>
+        android:layout_toRightOf="@+id/separator"
+        android:gravity="right"
+        android:hint="@string/default_time"
+        android:imeOptions="actionDone"
+        android:inputType="number"
+        android:maxLength="2"
+        android:textColor="#4400fb"
+        android:textColorHint="#4400fb"
+        android:textSize="30sp" />
 
     <TextView
         android:id="@+id/remaining_time"
+        android:textColor="#4400fb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_remaining_time"
@@ -111,6 +123,7 @@
 
     <TextView
         android:id="@+id/series_out"
+        android:textColor="#4400fb"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/default_series"
@@ -126,6 +139,7 @@
         android:text="@string/remaining_series"
         android:textSize="16sp"
         android:id="@+id/textViewRemainingSeries"
+        android:textColor="#4400fb"
         android:layout_alignBottom="@+id/go_home_progress"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="35dp" />
