@@ -138,7 +138,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 else {
                     remaining_time?.text =  "Bravo Bittino!"
                     remaining_time!!.visibility = View.VISIBLE
-                    remaining_series!!.visibility = View.VISIBLE
+                    remaining_series!!.visibility = View.GONE
+                    series_in!!.visibility = View.GONE
                     buttonStartTime!!.visibility = View.VISIBLE
                     buttonStopTime!!.visibility = View.GONE
                     time_in_minutes!!.visibility = View.VISIBLE
