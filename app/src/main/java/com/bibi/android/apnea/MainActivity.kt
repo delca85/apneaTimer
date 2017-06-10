@@ -5,6 +5,7 @@ import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             time_in_minutes!!.isEnabled = false
             time_in_seconds!!.isEnabled = false
             series_in!!.isEnabled = false
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startTimer()
         } else if (v.id == R.id.btnStopTime){
             mTimer!!.cancel()
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             time_in_minutes!!.isEnabled = true
             time_in_seconds!!.isEnabled = true
             series_in!!.isEnabled = true
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         }
     }
 
@@ -146,6 +149,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_in!!.isEnabled = true
                     separator!!.visibility = View.VISIBLE
                     go_home_progress?.progress = 0F
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                 }
             }
         }.start()
