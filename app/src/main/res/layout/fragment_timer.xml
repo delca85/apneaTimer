@@ -50,18 +50,16 @@
         android:id="@+id/series_in_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/time_in_seconds"
-        android:layout_alignBottom="@+id/time_in_seconds"
-        android:layout_below="@+id/textViewSeries"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@+id/textViewRemainingSeries"
         android:hint="@string/default_series"
         android:imeOptions="actionDone"
         android:inputType="number"
         android:maxLength="2"
         android:textColor="#4400fb"
         android:textColorHint="#4400fb"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_above="@+id/remaining_time"
+        android:layout_toEndOf="@+id/remaining_time"
+        android:layout_toRightOf="@+id/remaining_time" />
 
     <EditText
         android:id="@+id/time_in_minutes"
@@ -96,10 +94,6 @@
         android:id="@+id/time_in_seconds"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/separator"
-        android:layout_alignBottom="@+id/separator"
-        android:layout_toEndOf="@+id/separator"
-        android:layout_toRightOf="@+id/separator"
         android:gravity="right"
         android:hint="@string/default_time"
         android:imeOptions="actionDone"
@@ -107,7 +101,11 @@
         android:maxLength="2"
         android:textColor="#4400fb"
         android:textColorHint="#4400fb"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:layout_alignBaseline="@+id/separator"
+        android:layout_alignBottom="@+id/separator"
+        android:layout_alignLeft="@+id/textViewRemainingSeries"
+        android:layout_alignStart="@+id/textViewRemainingSeries" />
 
     <TextView
         android:id="@+id/remaining_time"
@@ -116,10 +114,9 @@
         android:layout_height="wrap_content"
         android:text="@string/default_remaining_time"
         android:textSize="50sp"
-        android:layout_below="@+id/time_in_minutes"
-        android:layout_alignLeft="@+id/textViewRemainingSeries"
-        android:layout_alignStart="@+id/textViewRemainingSeries"
-        android:layout_marginTop="36dp" />
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/time_in_seconds"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/series_out"

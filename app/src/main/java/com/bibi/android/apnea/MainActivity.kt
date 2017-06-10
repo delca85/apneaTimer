@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var separator: TextView? = null
     var remaining_time: TextView? = null            //shows the time
     var remaining_series: TextView? = null            //shows the series
+    var remaining_series_text: TextView? = null
     var go_home_progress: CircularProgressBar? = null
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
@@ -52,6 +53,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             time_in_minutes!!.isEnabled = false
             time_in_seconds!!.isEnabled = false
             series_in!!.isEnabled = false
+            remaining_series!!.visibility = View.VISIBLE
+            remaining_series_text!!.visibility = View.VISIBLE
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startTimer()
         } else if (v.id == R.id.btnStopTime){
@@ -75,6 +78,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStopTime = findViewById(R.id.btnStopTime) as Button?
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
+        remaining_series_text = findViewById(R.id.textViewRemainingSeries) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
         time_in_minutes!!.onFocusChangeListener = generateTwoDigitsWatcher()
         time_in_seconds!!.onFocusChangeListener = generateTwoDigitsWatcher()
@@ -139,7 +143,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     remaining_time?.text =  "Bravo Bittino!"
                     remaining_time!!.visibility = View.VISIBLE
                     remaining_series!!.visibility = View.GONE
-                    series_in!!.visibility = View.GONE
+                    remaining_series_text!!.visibility = View.GONE
                     buttonStartTime!!.visibility = View.VISIBLE
                     buttonStopTime!!.visibility = View.GONE
                     time_in_minutes!!.visibility = View.VISIBLE
