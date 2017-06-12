@@ -5,6 +5,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorHint">#4400FB</item>
+        <item name="android:textColor">#4400FB</item>
+        <item name="android:background">#000</item>
 
         <!-- Status bar -->
         <item name="android:windowLightStatusBar">true</item>
