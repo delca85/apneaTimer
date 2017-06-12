@@ -31,7 +31,8 @@
             android:layout_margin="5dp"
             android:layout_weight="5.33"
             android:gravity="center"
-            android:text="Start Timer" />
+            android:text="Start Timer"
+            android:background="@drawable/button"/>
         <Button
             android:id="@+id/btnStopTime"
             android:textColor="#4400fb"
@@ -41,7 +42,8 @@
             android:layout_weight="5.33"
             android:gravity="center"
             android:text="Stop Timer"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:background="@drawable/button"/>
         <Button
             android:id="@+id/btnLog"
             android:textColor="#4400fb"
@@ -51,7 +53,8 @@
             android:layout_weight="2"
             android:gravity="center"
             android:text="View Logs"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:background="@drawable/button"/>
         </LinearLayout>
 
 
