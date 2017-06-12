@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import com.bibi.android.apnea.utils.getPercentLeft
 import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -17,17 +15,21 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var mTimer: CountDownTimer? = null
 
+    var mainLayout: RelativeLayout? = null
+
     var buttonStartTime: Button? = null
     var buttonStopTime: Button? = null
 
     var toolbar: Toolbar? = null
     var time_in_minutes: EditText? = null
     var time_in_seconds: EditText? = null
+    var time_text: TextView? = null
     var series_in: EditText? = null
     var separator: TextView? = null
     var remaining_time: TextView? = null            //shows the time
     var remaining_series: TextView? = null            //shows the series
     var remaining_series_text: TextView? = null
+    var series_number_text: TextView? = null
     var go_home_progress: CircularProgressBar? = null
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
@@ -69,9 +71,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun bindViews() {
+        mainLayout = findViewById(R.id.fragmentLayout) as RelativeLayout
         toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
+        time_text = findViewById(R.id.textViewTime) as TextView
         series_in = findViewById(R.id.series_in_number) as EditText
         separator = findViewById(R.id.separator) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
@@ -79,9 +83,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         remaining_series_text = findViewById(R.id.textViewRemainingSeries) as TextView
+        series_number_text = findViewById(R.id.textViewSeries) as TextView
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
         time_in_minutes!!.onFocusChangeListener = generateTwoDigitsWatcher()
         time_in_seconds!!.onFocusChangeListener = generateTwoDigitsWatcher()
+        mainLayout!!.setOnClickListener(generateFragmentLayoutListener())
+    }
+
+    private fun  generateFragmentLayoutListener(): View.OnClickListener? {
+        val fragmentLayoutListener = View.OnClickListener {
+            remaining_time?.text = "00:00"
+            remaining_series!!.visibility = View.VISIBLE
+            remaining_series_text!!.visibility = View.VISIBLE
+            time_in_minutes!!.visibility = View.VISIBLE
+            time_in_seconds!!.visibility = View.VISIBLE
+            time_text!!.visibility = View.VISIBLE
+            separator!!.visibility = View.VISIBLE
+            time_in_minutes!!.isEnabled = true
+            time_in_seconds!!.isEnabled = true
+            series_in!!.visibility = View.VISIBLE
+            series_in!!.isEnabled = true
+            series_number_text!!.visibility = View.VISIBLE
+            buttonStartTime!!.visibility = View.VISIBLE
+        }
+        return fragmentLayoutListener
     }
 
     private fun generateTwoDigitsWatcher(): View.OnFocusChangeListener? {
@@ -118,8 +143,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         totalTimeCountMilliseconds = time * 1000L
 
-        if (!series_in!!.text.toString().equals(""))
+        if (series_in!!.text.toString().equals("")) {
+            numberOfSeries = 1
+            remaining_series!!.text = "1"
+        }
+        else {
             numberOfSeries = series_in!!.text.toString().toInt()
+            remaining_series!!.text = series_in!!.text.toString()
+        }
     }
 
     private fun startTimer() {
@@ -141,26 +172,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     this.start()
                 else {
                     remaining_time?.text =  "Bravo Bittino!"
-                    remaining_time!!.visibility = View.VISIBLE
                     remaining_series!!.visibility = View.GONE
                     remaining_series_text!!.visibility = View.GONE
-                    buttonStartTime!!.visibility = View.VISIBLE
                     buttonStopTime!!.visibility = View.GONE
-                    time_in_minutes!!.visibility = View.VISIBLE
-                    time_in_seconds!!.visibility = View.VISIBLE
-                    time_in_minutes!!.isEnabled = true
-                    time_in_seconds!!.isEnabled = true
-                    series_in!!.visibility = View.VISIBLE
-                    series_in!!.isEnabled = true
-                    separator!!.visibility = View.VISIBLE
+                    time_in_minutes!!.visibility = View.GONE
+                    time_in_seconds!!.visibility = View.GONE
+                    time_text!!.visibility = View.GONE
+                    separator!!.visibility = View.GONE
+                    series_in!!.visibility = View.GONE
+                    series_number_text!!.visibility = View.GONE
                     go_home_progress?.progress = 0F
                     window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                 }
             }
         }.start()
 
-
-
     }
-
 }
