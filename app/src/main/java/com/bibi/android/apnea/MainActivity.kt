@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun  generateFragmentLayoutListener(): View.OnClickListener? {
         val fragmentLayoutListener = View.OnClickListener {
+            mTimer!!.cancel()
             remaining_time?.text = "00:00"
             remaining_series!!.visibility = View.VISIBLE
             remaining_series_text!!.visibility = View.VISIBLE
@@ -108,6 +109,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             series_in!!.isEnabled = true
             series_number_text!!.visibility = View.VISIBLE
             buttonStartTime!!.visibility = View.VISIBLE
+            buttonStopTime!!.visibility = View.GONE
         }
         return fragmentLayoutListener
     }
