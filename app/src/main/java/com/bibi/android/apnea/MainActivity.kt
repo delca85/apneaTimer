@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var series_number_text: TextView? = null
     var go_home_progress: CircularProgressBar? = null
 
-    var series_stored: ArrayList<Pair<Int, Int>> = ArrayList<Pair<Int, Int>>()     // in order to memoize info about all executed series
+    var series_stored: ArrayList<Pair<Long, Long>> = ArrayList<Pair<Long, Long>>()     // in order to memoize info about all executed series
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
     var numberOfSeries: Int = 1                 //number of total series
@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             remaining_series!!.visibility = View.VISIBLE
             remaining_series_text!!.visibility = View.VISIBLE
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            series_stored.clear()
             startTimer()
         } else if (v.id == R.id.btnStopTime){
        /*     mTimer!!.cancel()
@@ -74,9 +75,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             time_in_seconds!!.isEnabled = true
             series_in!!.isEnabled = true
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)*/
-/*            var pairToBeAdded = Pair(getMillis(remaining_time.toString().split(":")[0],
-            remaining_time.toString().split(":")[1]))
-            series_stored.add(pairToBeAdded)*/
+            var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
+                    remaining_time!!.text.toString().split(":")[1])
+            var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
+            series_stored.add(pairToBeAdded as Pair<Long, Long>)
         }
     }
 
@@ -102,7 +104,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun  generateFragmentLayoutListener(): View.OnClickListener? {
         val fragmentLayoutListener = View.OnClickListener {
-            mTimer!!.cancel()
+            if (mTimer != null)
+                mTimer!!.cancel()
             remaining_time?.text = "00:00"
             remaining_series!!.visibility = View.VISIBLE
             remaining_series_text!!.visibility = View.VISIBLE
@@ -166,7 +169,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished <= 10000 && toBePlayed){
+                if (millisUntilFinished <= 11000  && toBePlayed){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                     val r = RingtoneManager.getRingtone(applicationContext, notification)
                     r.play()
@@ -186,6 +189,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+                toBePlayed = true
 
                 if (numberOfSeries > 0) {
                     this.start()
@@ -204,8 +208,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_number_text!!.visibility = View.GONE
                     go_home_progress?.progress = 0F
                     window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400)
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
 
+                    System.out.println(series_stored)
                 }
             }
         }.start()
