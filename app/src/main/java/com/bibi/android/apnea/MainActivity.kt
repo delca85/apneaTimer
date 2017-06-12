@@ -4,12 +4,10 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.media.ToneGenerator
-import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -27,7 +25,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var buttonStopTime: Button? = null
     var buttonViewLogs: Button? = null
 
-    var toolbar: Toolbar? = null
     var time_in_minutes: EditText? = null
     var time_in_seconds: EditText? = null
     var time_text: TextView? = null
@@ -53,31 +50,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
         buttonViewLogs!!.setOnClickListener(this)
-
-        setSupportActionBar(toolbar)
     }
 
     override fun onClick(v: View?) {
         if (v!!.id == R.id.btnStartTime){
-            setTimer()
-            buttonStopTime!!.visibility = View.VISIBLE
-            buttonStartTime!!.visibility = View.GONE
-            time_in_minutes!!.isEnabled = false
-            time_in_seconds!!.isEnabled = false
-            series_in!!.isEnabled = false
-            remaining_series!!.visibility = View.VISIBLE
-            remaining_series_text!!.visibility = View.VISIBLE
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            series_stored.clear()
-            startTimer()
+            if (setTimer()) {
+                buttonStopTime!!.visibility = View.VISIBLE
+                buttonStartTime!!.visibility = View.GONE
+                time_in_minutes!!.isEnabled = false
+                time_in_seconds!!.isEnabled = false
+                series_in!!.isEnabled = false
+                remaining_series!!.visibility = View.VISIBLE
+                remaining_series_text!!.visibility = View.VISIBLE
+                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                series_stored.clear()
+                startTimer()
+            }
         } else if (v.id == R.id.btnStopTime){
-       /*     mTimer!!.cancel()
-            buttonStartTime!!.visibility = View.VISIBLE
-            buttonStopTime!!.visibility = View.GONE
-            time_in_minutes!!.isEnabled = true
-            time_in_seconds!!.isEnabled = true
-            series_in!!.isEnabled = true
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)*/
+            //window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
                     remaining_time!!.text.toString().split(":")[1])
             var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
@@ -87,7 +77,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun bindViews() {
         mainLayout = findViewById(R.id.fragmentLayout) as RelativeLayout
-        toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
         time_text = findViewById(R.id.textViewTime) as TextView
@@ -125,6 +114,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             series_number_text!!.visibility = View.VISIBLE
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
+            buttonViewLogs!!.visibility = View.GONE
         }
         return fragmentLayoutListener
     }
@@ -150,14 +140,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return focusChangeListener
     }
 
-    private fun setTimer() {
+    private fun setTimer(): Boolean {
         if (!time_in_minutes!!.text.toString().equals("") || !time_in_seconds!!.text.toString().equals("")) {
             totalTimeCountMilliseconds = getMillis(time_in_minutes!!.text.toString(),
                     time_in_seconds!!.text.toString())
         }
-        else
+        else {
             Toast.makeText(this, "Please enter time...",
                     Toast.LENGTH_LONG).show()
+            return false
+        }
 
         if (series_in!!.text.toString().equals("")) {
             numberOfSeries = 1
@@ -167,6 +159,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             numberOfSeries = series_in!!.text.toString().toInt()
             remaining_series!!.text = series_in!!.text.toString()
         }
+        return true
     }
 
     private fun startTimer() {
@@ -206,7 +199,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     remaining_series!!.visibility = View.GONE
                     remaining_series_text!!.visibility = View.GONE
                     buttonStopTime!!.visibility = View.GONE
-//                    buttonViewLogs!!.visibility = View.VISIBLE
+                    buttonViewLogs!!.visibility = View.VISIBLE
                     time_in_minutes!!.visibility = View.GONE
                     time_in_seconds!!.visibility = View.GONE
                     time_text!!.visibility = View.GONE

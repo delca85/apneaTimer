@@ -15,14 +15,6 @@
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#000"
-            android:minHeight="?attr/actionBarSize"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,20 +27,30 @@
             android:id="@+id/btnStartTime"
             android:textColor="#4400fb"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="95dp"
             android:layout_margin="5dp"
-            android:layout_weight="2"
+            android:layout_weight="5.33"
             android:gravity="center"
             android:text="Start Timer" />
         <Button
             android:id="@+id/btnStopTime"
             android:textColor="#4400fb"
             android:layout_width="match_parent"
+            android:layout_height="95dp"
+            android:layout_margin="5dp"
+            android:layout_weight="5.33"
+            android:gravity="center"
+            android:text="Stop Timer"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/btnLog"
+            android:textColor="#4400fb"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="Stop Timer"
+            android:text="View Logs"
             android:visibility="gone" />
         </LinearLayout>
 
