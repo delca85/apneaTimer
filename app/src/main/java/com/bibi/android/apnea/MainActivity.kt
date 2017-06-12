@@ -1,5 +1,7 @@
 package com.bibi.android.apnea
 
+import android.content.Context
+import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
@@ -67,12 +69,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startTimer()
             }
         } else if (v.id == R.id.btnStopTime){
-            //window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
                     remaining_time!!.text.toString().split(":")[1])
             var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
             series_stored.add(pairToBeAdded as Pair<Long, Long>)
+        } else if (v.id == R.id.btnLog){
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            viewLogs(v)
         }
+    }
+
+
+    // function that change activity to the one with logs table
+    private fun viewLogs(view: View) {
+        startActivity(ViewLogsIntent())
     }
 
     private fun bindViews() {
