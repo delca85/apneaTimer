@@ -9,8 +9,6 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -38,6 +36,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var remaining_series_text: TextView? = null
     var series_number_text: TextView? = null
     var go_home_progress: CircularProgressBar? = null
+
+    var series_stored: ArrayList<Pair<Int, Int>> = ArrayList<Pair<Int, Int>>()     // in order to memoize info about all executed series
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
     var numberOfSeries: Int = 1                 //number of total series
@@ -67,13 +67,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startTimer()
         } else if (v.id == R.id.btnStopTime){
-            mTimer!!.cancel()
+       /*     mTimer!!.cancel()
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
             time_in_minutes!!.isEnabled = true
             time_in_seconds!!.isEnabled = true
             series_in!!.isEnabled = true
-            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)*/
+/*            var pairToBeAdded = Pair(getMillis(remaining_time.toString().split(":")[0],
+            remaining_time.toString().split(":")[1]))
+            series_stored.add(pairToBeAdded)*/
         }
     }
 
@@ -139,18 +142,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTimer() {
-        var time = 0
         if (!time_in_minutes!!.text.toString().equals("") || !time_in_seconds!!.text.toString().equals("")) {
-            if (!time_in_minutes!!.text.toString().equals(""))
-                time += time_in_minutes!!.text.toString().toInt() * 60
-            if (!time_in_seconds!!.text.toString().equals(""))
-                time += time_in_seconds!!.text.toString().toInt()
+            totalTimeCountMilliseconds = getMillis(time_in_minutes!!.text.toString(),
+                    time_in_seconds!!.text.toString())
         }
         else
             Toast.makeText(this, "Please enter time...",
                     Toast.LENGTH_LONG).show()
-
-        totalTimeCountMilliseconds = time * 1000L
 
         if (series_in!!.text.toString().equals("")) {
             numberOfSeries = 1
@@ -187,9 +185,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
+                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
 
-                if (numberOfSeries > 0)
+                if (numberOfSeries > 0) {
                     this.start()
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+                }
                 else {
                     remaining_time?.text =  "Bravo Bittino!"
                     remaining_series!!.visibility = View.GONE
@@ -203,8 +204,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_number_text!!.visibility = View.GONE
                     go_home_progress?.progress = 0F
                     window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-                    val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 400)
+
                 }
             }
         }.start()
