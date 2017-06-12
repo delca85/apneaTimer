@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
+import com.bibi.android.apnea.utils.getMillis
 import com.bibi.android.apnea.utils.getPercentLeft
 import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -156,19 +157,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTimer() {
-        var alreadyPlayed = false
+        var toBePlayed = getMillis(time_in_minutes!!.text.toString(), time_in_seconds!!.text.toString()) >= 10000
 
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished <= 10000 && !alreadyPlayed){
+                if (millisUntilFinished <= 10000 && toBePlayed){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                     val r = RingtoneManager.getRingtone(applicationContext, notification)
                     r.play()
                     Handler().postDelayed({
                         r.stop()
                     }, 2000)
-                    alreadyPlayed = true
+                    toBePlayed = false
                 }
                 remaining_time?.text = toReadableTime(millisUntilFinished)
                 remaining_series?.text = numberOfSeries.toString()

@@ -11,3 +11,9 @@ fun toReadableTime(millis: Long): String {
     return String.format("%02d:%02d", seconds / 60,
             seconds % 60)
 }
+
+fun getMillis(timeInMinutes: String, timeInSeconds: String) : Long{
+    val timeInMinutesInt = if (timeInMinutes.equals("")) 0 else timeInMinutes.toInt()
+    val timeInSecondsInt = if (timeInSeconds.equals("")) 0 else timeInSeconds.toInt()
+    return timeInMinutesInt * 60 * 1000L + timeInSecondsInt * 1000L
+}
