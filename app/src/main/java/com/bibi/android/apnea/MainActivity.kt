@@ -1,6 +1,7 @@
 package com.bibi.android.apnea
 
 import android.media.AudioManager
+import android.media.MediaPlayer
 import android.media.RingtoneManager
 import android.media.ToneGenerator
 import android.net.Uri
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var buttonStartTime: Button? = null
     var buttonStopTime: Button? = null
+    var buttonViewLogs: Button? = null
 
     var toolbar: Toolbar? = null
     var time_in_minutes: EditText? = null
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
+        buttonViewLogs!!.setOnClickListener(this)
 
         setSupportActionBar(toolbar)
     }
@@ -92,6 +95,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         separator = findViewById(R.id.separator) as TextView
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
         buttonStopTime = findViewById(R.id.btnStopTime) as Button?
+        buttonViewLogs = findViewById(R.id.btnLog) as Button?
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         remaining_series_text = findViewById(R.id.textViewRemainingSeries) as TextView
@@ -102,6 +106,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mainLayout!!.setOnClickListener(generateFragmentLayoutListener())
     }
 
+    // function created in order to make screen touch working
     private fun  generateFragmentLayoutListener(): View.OnClickListener? {
         val fragmentLayoutListener = View.OnClickListener {
             if (mTimer != null)
@@ -124,6 +129,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         return fragmentLayoutListener
     }
 
+    // function that forces input with two digits in minutes and seconds
     private fun generateTwoDigitsWatcher(): View.OnFocusChangeListener? {
         val focusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             if (!hasFocus){
@@ -169,12 +175,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished <= 11000  && toBePlayed){
+                if (millisUntilFinished <= 11000  && toBePlayed && !remaining_series!!.text.equals("1")){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                    val r = RingtoneManager.getRingtone(applicationContext, notification)
-                    r.play()
+                    val mp = MediaPlayer.create(applicationContext, notification)
+                    mp.start()
                     Handler().postDelayed({
-                        r.stop()
+                        mp.stop()
                     }, 2000)
                     toBePlayed = false
                 }
@@ -200,6 +206,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     remaining_series!!.visibility = View.GONE
                     remaining_series_text!!.visibility = View.GONE
                     buttonStopTime!!.visibility = View.GONE
+//                    buttonViewLogs!!.visibility = View.VISIBLE
                     time_in_minutes!!.visibility = View.GONE
                     time_in_seconds!!.visibility = View.GONE
                     time_text!!.visibility = View.GONE
