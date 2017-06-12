@@ -73,6 +73,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     remaining_time!!.text.toString().split(":")[1])
             var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
             series_stored.add(pairToBeAdded as Pair<Long, Long>)
+            Toast.makeText(this, "No breath time stored!",
+                    Toast.LENGTH_LONG).show()
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startActivity(ViewLogsIntent(series_stored))
