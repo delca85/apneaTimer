@@ -1,10 +1,12 @@
 package com.bibi.android.apnea
 
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -154,9 +156,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTimer() {
+        var alreadyPlayed = false
+
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
+                if (millisUntilFinished <= 10000 && !alreadyPlayed){
+                    val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                    val r = RingtoneManager.getRingtone(applicationContext, notification)
+                    r.play()
+                    Handler().postDelayed({
+                        r.stop()
+                    }, 2000)
+                    alreadyPlayed = true
+                }
                 remaining_time?.text = toReadableTime(millisUntilFinished)
                 remaining_series?.text = numberOfSeries.toString()
                 go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished-500,
