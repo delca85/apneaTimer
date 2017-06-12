@@ -7,6 +7,8 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -101,10 +103,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             remaining_series_text!!.visibility = View.VISIBLE
             time_in_minutes!!.visibility = View.VISIBLE
             time_in_seconds!!.visibility = View.VISIBLE
-            time_text!!.visibility = View.VISIBLE
-            separator!!.visibility = View.VISIBLE
             time_in_minutes!!.isEnabled = true
             time_in_seconds!!.isEnabled = true
+            time_text!!.visibility = View.VISIBLE
+            separator!!.visibility = View.VISIBLE
             series_in!!.visibility = View.VISIBLE
             series_in!!.isEnabled = true
             series_number_text!!.visibility = View.VISIBLE
