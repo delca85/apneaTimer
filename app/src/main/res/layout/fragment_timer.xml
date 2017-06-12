@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
+    android:id="@+id/fragmentLayout"
     >
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
@@ -57,9 +58,10 @@
         android:textColor="#4400fb"
         android:textColorHint="#4400fb"
         android:textSize="30sp"
-        android:layout_above="@+id/remaining_time"
-        android:layout_toEndOf="@+id/remaining_time"
-        android:layout_toRightOf="@+id/remaining_time" />
+        android:layout_alignBaseline="@+id/time_in_seconds"
+        android:layout_alignBottom="@+id/time_in_seconds"
+        android:layout_toRightOf="@+id/remaining_time"
+        android:layout_toEndOf="@+id/remaining_time" />
 
     <EditText
         android:id="@+id/time_in_minutes"
@@ -114,8 +116,7 @@
         android:layout_height="wrap_content"
         android:text="@string/default_remaining_time"
         android:textSize="50sp"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/time_in_seconds"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -125,10 +126,10 @@
         android:layout_height="wrap_content"
         android:text="@string/default_series"
         android:textSize="30sp"
-        android:layout_above="@+id/textViewRemainingSeries"
+        android:gravity="right"
+        android:layout_below="@+id/remaining_time"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="right" />
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -137,8 +138,9 @@
         android:textSize="16sp"
         android:id="@+id/textViewRemainingSeries"
         android:textColor="#4400fb"
-        android:layout_alignBottom="@+id/go_home_progress"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp" />
+        android:layout_below="@+id/remaining_time"
+        android:layout_alignLeft="@+id/remaining_time"
+        android:layout_alignStart="@+id/remaining_time"
+        android:layout_marginTop="70dp" />
 
 </RelativeLayout>
