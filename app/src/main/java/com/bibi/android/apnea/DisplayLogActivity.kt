@@ -11,13 +11,21 @@ import android.support.v7.app.AppCompatActivity
  */
 
 
-fun Context.ViewLogsIntent(): Intent {
-    return Intent(this, DisplayLogActivity::class.java)
+fun Context.ViewLogsIntent(series_stored: ArrayList<Pair<Long, Long>>): Intent {
+    return Intent(this, DisplayLogActivity::class.java).apply {
+        putExtra(INTENT_LOGS_LIST, series_stored)
+    }
 }
 
+private const val INTENT_LOGS_LIST = "logs_list"
+
 class DisplayLogActivity: AppCompatActivity() {
+    var series_list: ArrayList<Pair<Long, Long>>?  = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        series_list = intent.getStringArrayListExtra(INTENT_LOGS_LIST) as ArrayList<Pair<Long, Long>>
     }
 
 }

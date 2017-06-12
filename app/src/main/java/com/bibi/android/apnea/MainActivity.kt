@@ -75,14 +75,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             series_stored.add(pairToBeAdded as Pair<Long, Long>)
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-            viewLogs(v)
+            startActivity(ViewLogsIntent(series_stored))
         }
-    }
-
-
-    // function that change activity to the one with logs table
-    private fun viewLogs(view: View) {
-        startActivity(ViewLogsIntent())
     }
 
     private fun bindViews() {
@@ -219,8 +213,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     go_home_progress?.progress = 0F
                     window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
-
-                    System.out.println(series_stored)
                 }
             }
         }.start()
