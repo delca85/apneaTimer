@@ -1,6 +1,8 @@
 package com.bibi.android.apnea
 
+import android.media.AudioManager
 import android.media.RingtoneManager
+import android.media.ToneGenerator
 import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -201,6 +203,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_number_text!!.visibility = View.GONE
                     go_home_progress?.progress = 0F
                     window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+                    val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
                 }
             }
         }.start()
