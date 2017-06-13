@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.view.Gravity
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
@@ -36,19 +37,21 @@ class DisplayLogActivity: AppCompatActivity() {
 
     private fun populateTable() {
         var tableLayout = findViewById(R.id.logsTable) as TableLayout
+        var tr = Array(series_list!!.size, {TableRow(this)})
+        var nSeries = Array(series_list!!.size, {TextView(this)})
+        var apneaTime = Array(series_list!!.size, {TextView(this)})
+        var breathTime = Array(series_list!!.size, {TextView(this)})
         for (i in 1..series_list!!.size){
-            var tr = TableRow(this)
-            var nSeries = TextView(this)
-            var apneaTime = TextView(this)
-            var breathTime = TextView(this)
-            nSeries.setText(i.toString())
-            System.out.println("AAA" + series_list!!.get(i-1))
-            apneaTime.text = getStringFromMillis(series_list!!.get(i-1).first)
-            breathTime.text = getStringFromMillis(series_list!!.get(i-1).second)
-            tr.addView(nSeries)
-            tr.addView(apneaTime)
-            tr.addView(breathTime)
-            tableLayout.addView(tr, TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+            nSeries[i-1].text = i.toString()
+            apneaTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).first)
+            breathTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).second)
+            nSeries[i-1].gravity = Gravity.CENTER
+            apneaTime[i-1].gravity = Gravity.CENTER
+            breathTime[i-1].gravity = Gravity.CENTER
+            tr[i-1].addView(nSeries[i-1])
+            tr[i-1].addView(apneaTime[i-1])
+            tr[i-1].addView(breathTime[i-1])
+            tableLayout.addView(tr[i-1], TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT))
 
         }
