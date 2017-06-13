@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     remaining_time!!.text.toString().split(":")[1])
             var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
             series_stored.add(pairToBeAdded as Pair<Long, Long>)
-            Toast.makeText(this, "No breath time stored!",
+            Toast.makeText(applicationContext, "Apnea time stored!",
                     Toast.LENGTH_LONG).show()
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     time_in_seconds!!.text.toString())
         }
         else {
-            Toast.makeText(this, "Please enter time...",
+            Toast.makeText(applicationContext, "Please enter time...",
                     Toast.LENGTH_LONG).show()
             return false
         }
@@ -199,6 +199,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 go_home_progress?.progress = 0F
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
                 toBePlayed = true
+
+                if (series_stored != null && series_stored!!.size < (series_in!!.text.toString().toInt() -
+                        numberOfSeries))
+                    series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
 
                 if (numberOfSeries > 0) {
                     this.start()
