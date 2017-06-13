@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
 import android.widget.*
@@ -212,13 +213,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     series_in!!.isEnabled = true
                     go_home_progress?.progress = 0F
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
-                    val dialog = AlertDialog.Builder(this@MainActivity, R.style.DialogTheme)
-                    dialog.setTitle("Series Ended")
-                    dialog.setMessage("Bravo Bittino!")
-                    dialog.show()
+                    showBravoDialog()
                 }
             }
         }.start()
 
     }
+
+    private fun showBravoDialog() {
+        val layoutInflater = LayoutInflater.from(this@MainActivity)
+        var view = layoutInflater.inflate(R.layout.activity_series_end, null)
+        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+        alertDialogBuilder.setView(view)
+        val alert = alertDialogBuilder.create()
+        alert.show()
+    }
+
 }
