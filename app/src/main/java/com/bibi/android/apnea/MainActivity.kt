@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var buttonStartTime: Button? = null
     var buttonStopTime: Button? = null
     var buttonViewLogs: Button? = null
+    var buttonReset: Button? = null
 
     var time_in_minutes: EditText? = null
     var time_in_seconds: EditText? = null
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
         buttonViewLogs!!.setOnClickListener(this)
+        buttonReset!!.setOnClickListener(this)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
@@ -83,6 +85,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startActivity(ViewLogsIntent(series_stored))
+        } else if (v.id == R.id.btnReset){
+            if (mTimer != null)
+                mTimer!!.cancel()
+            remaining_time?.text = "00:00"
+            remaining_series!!.visibility = View.VISIBLE
+            remaining_series_text!!.visibility = View.VISIBLE
+            time_in_minutes!!.visibility = View.VISIBLE
+            time_in_seconds!!.visibility = View.VISIBLE
+            time_in_minutes!!.setText("00")
+            time_in_seconds!!.setText("00")
+            time_in_minutes!!.isEnabled = true
+            time_in_seconds!!.isEnabled = true
+            time_text!!.visibility = View.VISIBLE
+            separator!!.visibility = View.VISIBLE
+            series_in!!.visibility = View.VISIBLE
+            series_in!!.isEnabled = true
+            series_number_text!!.visibility = View.VISIBLE
+            buttonStartTime!!.visibility = View.VISIBLE
+            buttonStopTime!!.visibility = View.GONE
+            buttonViewLogs!!.visibility = View.GONE
         }
     }
 
@@ -96,6 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStartTime = findViewById(R.id.btnStartTime) as Button?
         buttonStopTime = findViewById(R.id.btnStopTime) as Button?
         buttonViewLogs = findViewById(R.id.btnLog) as Button?
+        buttonReset = findViewById(R.id.btnReset) as Button?
         remaining_time = findViewById(R.id.remaining_time) as TextView
         remaining_series = findViewById(R.id.series_out) as TextView
         remaining_series_text = findViewById(R.id.textViewRemainingSeries) as TextView
@@ -103,31 +126,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
         time_in_minutes!!.onFocusChangeListener = generateTwoDigitsWatcher()
         time_in_seconds!!.onFocusChangeListener = generateTwoDigitsWatcher()
-//        mainLayout!!.setOnClickListener(generateFragmentLayoutListener())
-    }
-
-    // function created in order to make screen touch working
-    private fun  generateFragmentLayoutListener(): View.OnClickListener? {
-        val fragmentLayoutListener = View.OnClickListener {
-            if (mTimer != null)
-                mTimer!!.cancel()
-            remaining_time?.text = "00:00"
-            remaining_series!!.visibility = View.VISIBLE
-            remaining_series_text!!.visibility = View.VISIBLE
-            time_in_minutes!!.visibility = View.VISIBLE
-            time_in_seconds!!.visibility = View.VISIBLE
-            time_in_minutes!!.isEnabled = true
-            time_in_seconds!!.isEnabled = true
-            time_text!!.visibility = View.VISIBLE
-            separator!!.visibility = View.VISIBLE
-            series_in!!.visibility = View.VISIBLE
-            series_in!!.isEnabled = true
-            series_number_text!!.visibility = View.VISIBLE
-            buttonStartTime!!.visibility = View.VISIBLE
-            buttonStopTime!!.visibility = View.GONE
-            buttonViewLogs!!.visibility = View.GONE
-        }
-        return fragmentLayoutListener
     }
 
     // function that forces input with two digits in minutes and seconds

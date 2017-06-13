@@ -37,7 +37,7 @@
             android:layout_margin="5dp"
             android:layout_weight="5.33"
             android:gravity="center"
-            android:text="Stop Timer"
+            android:text="Breath!"
             android:visibility="gone"
             android:background="@drawable/button"/>
 
