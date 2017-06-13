@@ -19,5 +19,7 @@ fun getMillis(timeInMinutes: String, timeInSeconds: String) : Long{
 }
 
 fun getStringFromMillis(millis: Long): String{
-    return "" + millis / 60000 + ":" + millis % 60000
+    var minutes = "%02d".format(millis/60000)
+    var seconds = "%02d".format((millis / 1000) % 60)
+    return minutes + ":" + seconds
 }
