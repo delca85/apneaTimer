@@ -64,6 +64,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             if (setTimer()) {
                 buttonStopTime!!.visibility = View.VISIBLE
                 buttonStartTime!!.visibility = View.GONE
+                buttonViewLogs!!.visibility = View.GONE
                 time_in_minutes!!.isEnabled = false
                 time_in_seconds!!.isEnabled = false
                 series_in!!.isEnabled = false
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         go_home_progress = findViewById(R.id.go_home_progress) as CircularProgressBar
         time_in_minutes!!.onFocusChangeListener = generateTwoDigitsWatcher()
         time_in_seconds!!.onFocusChangeListener = generateTwoDigitsWatcher()
-        mainLayout!!.setOnClickListener(generateFragmentLayoutListener())
+//        mainLayout!!.setOnClickListener(generateFragmentLayoutListener())
     }
 
     // function created in order to make screen touch working
@@ -173,12 +174,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTimer() {
-        var toBePlayed = getMillis(time_in_minutes!!.text.toString(), time_in_seconds!!.text.toString()) >= 10000
+        var toBePlayed = true
 
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished <= 11000  && toBePlayed && !remaining_series!!.text.equals("1")){
+                if (millisUntilFinished <= 11000  && getMillis(time_in_minutes!!.text.toString(), time_in_seconds!!.text.toString()) >= 10000 &&
+                        toBePlayed && !remaining_series!!.text.equals("1")){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                     val mp = MediaPlayer.create(applicationContext, notification)
                     mp.start()
