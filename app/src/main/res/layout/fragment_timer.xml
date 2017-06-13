@@ -10,13 +10,10 @@
         android:id="@+id/go_home_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         app:cpb_background_progressbar_color="#0078fe"
         app:cpb_background_progressbar_width="20dp"
         app:cpb_progressbar_color="@color/colorAccent"
         app:cpb_progressbar_width="15dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="30dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -110,7 +107,8 @@
         android:layout_height="wrap_content"
         android:text="@string/default_remaining_time"
         android:textSize="50sp"
-        android:layout_centerVertical="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/series_in_number"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -130,18 +128,17 @@
         android:text="@string/remaining_series"
         android:textSize="16sp"
         android:id="@+id/textViewRemainingSeries"
-        android:layout_below="@+id/remaining_time"
+        android:layout_below="@+id/series_out"
         android:layout_alignLeft="@+id/remaining_time"
-        android:layout_alignStart="@+id/remaining_time"
-        android:layout_marginTop="70dp" />
+        android:layout_alignStart="@+id/remaining_time" />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Reset"
         android:id="@+id/btnReset"
+        android:background="@drawable/button"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textViewSeries"
-        android:layout_toStartOf="@+id/textViewSeries"
-        android:background="@drawable/button"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="34dp" />
 
 </RelativeLayout>
