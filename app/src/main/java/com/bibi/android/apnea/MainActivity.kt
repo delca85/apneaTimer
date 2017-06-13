@@ -173,6 +173,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startTimer() {
         var toBePlayed = true
+        var series_executed = 0
 
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
@@ -200,8 +201,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
                 toBePlayed = true
 
-                if (series_stored != null && series_stored!!.size < (series_in!!.text.toString().toInt() -
-                        numberOfSeries))
+                series_executed++
+                
+                if (series_stored != null && series_stored!!.size < series_executed)
                     series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
 
                 if (numberOfSeries > 0) {
