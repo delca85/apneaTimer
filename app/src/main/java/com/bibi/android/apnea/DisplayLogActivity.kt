@@ -24,7 +24,7 @@ class DisplayLogActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(R.layout.activity_display_logs)
         series_list = intent.getStringArrayListExtra(INTENT_LOGS_LIST) as ArrayList<Pair<Long, Long>>
     }
 

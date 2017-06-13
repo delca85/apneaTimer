@@ -177,8 +177,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
             override fun onTick(millisUntilFinished: Long) {
-                if (millisUntilFinished <= 11000  && getMillis(time_in_minutes!!.text.toString(), time_in_seconds!!.text.toString()) >= 10000 &&
-                        toBePlayed && !remaining_series!!.text.equals("1")){
+                if (millisUntilFinished <= 11000  && totalTimeCountMilliseconds!!.compareTo(10000) > 0
+                        && toBePlayed && !remaining_series!!.text.equals("1")){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
                     val mp = MediaPlayer.create(applicationContext, notification)
                     mp.start()
@@ -227,6 +227,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         alertDialogBuilder.setView(view)
         val alert = alertDialogBuilder.create()
         alert.show()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
 }
