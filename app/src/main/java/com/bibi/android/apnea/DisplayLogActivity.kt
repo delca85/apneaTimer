@@ -5,6 +5,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
+import com.bibi.android.apnea.utils.getStringFromMillis
 
 /**
  * Created by bibi on 12/06/17.
@@ -26,6 +30,27 @@ class DisplayLogActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_logs)
         series_list = intent.getStringArrayListExtra(INTENT_LOGS_LIST) as ArrayList<Pair<Long, Long>>
+
+        populateTable()
+    }
+
+    private fun populateTable() {
+        var tableLayout = findViewById(R.id.logsTable) as TableLayout
+        for (i in 1..series_list!!.size){
+            var tr = TableRow(this)
+            var nSeries = TextView(this)
+            var apneaTime = TextView(this)
+            var breathTime = TextView(this)
+            nSeries.setText(i.toString())
+            apneaTime.setText(getStringFromMillis(series_list!!.get(i-1).first))
+            breathTime.setText(getStringFromMillis(series_list!!.get(i-1).second))
+            tr.addView(nSeries)
+            tr.addView(apneaTime)
+            tr.addView(breathTime)
+            tableLayout.addView(tr, TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT))
+
+        }
     }
 
 }

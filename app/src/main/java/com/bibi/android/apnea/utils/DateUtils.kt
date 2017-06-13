@@ -17,3 +17,7 @@ fun getMillis(timeInMinutes: String, timeInSeconds: String) : Long{
     val timeInSecondsInt = if (timeInSeconds.equals("")) 0 else timeInSeconds.toInt()
     return timeInMinutesInt * 60 * 1000L + timeInSecondsInt * 1000L
 }
+
+fun getStringFromMillis(millis: Long): String{
+    return "" + millis / 60000 + ":" + millis % 60000
+}
