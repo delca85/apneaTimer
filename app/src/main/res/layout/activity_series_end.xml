@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/activity_series_end"
-    android:theme="@style/AppTheme">
+    android:theme="@style/DialogTheme">
 
     <TextView
         android:id="@+id/bravo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Bravo Bittino!"
-        android:textSize="50sp" />
+        android:layout_centerVertical="true"/>
+        <!--android:textSize="50sp" -->
+        <!--/>-->
 
 </RelativeLayout>

@@ -13,4 +13,10 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="colorAccent">#0078fe</item>
+        <item name="android:textColorPrimary">#0078fe</item>
+        <item name="android:textColor">#0078fe</item>
+        <item name="android:textSize">54sp</item>
+    </style>
 </resources>

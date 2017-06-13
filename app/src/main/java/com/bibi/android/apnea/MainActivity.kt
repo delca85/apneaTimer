@@ -1,5 +1,7 @@
 package com.bibi.android.apnea
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
@@ -52,6 +54,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
         buttonViewLogs!!.setOnClickListener(this)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
     }
 
     override fun onClick(v: View?) {
@@ -64,7 +68,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 series_in!!.isEnabled = false
                 remaining_series!!.visibility = View.VISIBLE
                 remaining_series_text!!.visibility = View.VISIBLE
-                window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                 series_stored.clear()
                 startTimer()
             }
@@ -201,20 +204,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
                 }
                 else {
-                    remaining_time?.text =  "Bravo Bittino!"
-                    remaining_series!!.visibility = View.GONE
-                    remaining_series_text!!.visibility = View.GONE
                     buttonStopTime!!.visibility = View.GONE
+                    buttonStartTime!!.visibility = View.VISIBLE
                     buttonViewLogs!!.visibility = View.VISIBLE
-                    time_in_minutes!!.visibility = View.GONE
-                    time_in_seconds!!.visibility = View.GONE
-                    time_text!!.visibility = View.GONE
-                    separator!!.visibility = View.GONE
-                    series_in!!.visibility = View.GONE
-                    series_number_text!!.visibility = View.GONE
+                    time_in_minutes!!.isEnabled = true
+                    time_in_seconds!!.isEnabled = true
+                    series_in!!.isEnabled = true
                     go_home_progress?.progress = 0F
-                    window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
+                    val dialog = AlertDialog.Builder(this@MainActivity, R.style.DialogTheme)
+                    dialog.setTitle("Series Ended")
+                    dialog.setMessage("Bravo Bittino!")
+                    dialog.show()
                 }
             }
         }.start()

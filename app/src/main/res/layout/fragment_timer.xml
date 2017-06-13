@@ -68,7 +68,6 @@
         android:layout_marginTop="16dp"
         android:layout_toLeftOf="@+id/separator"
         android:layout_toStartOf="@+id/separator"
-        android:gravity="right"
         android:hint="@string/default_time"
         android:selectAllOnFocus="true"
         android:imeOptions="actionDone"
