@@ -45,6 +45,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
     var numberOfSeries: Int = 1                 //number of total series
 
+    var mTimerRunning: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mTimer != null && mTimerRunning) {
             trackApneaTime()
             return true
         }
@@ -121,6 +123,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun finishSeries() {
+        mTimerRunning = false
         if (mTimer != null)
             mTimer!!.cancel()
         buttonStopTime!!.visibility = View.GONE
@@ -201,6 +204,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun startTimer() {
         var toBePlayed = true
         var series_executed = 0
+        mTimerRunning = true
 
         mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
 
