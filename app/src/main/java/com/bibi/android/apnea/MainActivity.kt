@@ -1,7 +1,6 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
-import android.content.Context
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -229,7 +228,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (millisUntilFinished <= 11000  && totalTimeCountMilliseconds!!.compareTo(10000) > 0
                         && toBePlayed && !remaining_series!!.text.equals("1")){
                     val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
-                    val mp = MediaPlayer.create(applicationContext, notification)
+                    val mp = MediaPlayer.create(applicationContext, R.raw.ten)
                     mp.start()
                     Handler().postDelayed({
                         mp.stop()
