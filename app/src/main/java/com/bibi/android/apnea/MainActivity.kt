@@ -194,7 +194,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun setTimer(): Boolean {
-        if (!time_in_minutes!!.text.toString().equals("") || !time_in_seconds!!.text.toString().equals("")) {
+        if (!(time_in_minutes!!.text.toString().equals("") || time_in_minutes!!.text.toString().equals("00")) ||
+                !(time_in_seconds!!.text.toString().equals("") || time_in_seconds!!.text.toString().equals("00"))) {
             totalTimeCountMilliseconds = getMillis(time_in_minutes!!.text.toString(),
                     time_in_seconds!!.text.toString())
         }
