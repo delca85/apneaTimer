@@ -1,6 +1,7 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
+import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
@@ -8,6 +9,7 @@ import android.media.ToneGenerator
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
+import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -46,6 +48,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var numberOfSeries: Int = 1                 //number of total series
 
     var mTimerRunning: Boolean = false
+    var vibe: Vibrator? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         bindViews()
 
+        vibe = getSystemService(android.content.Context.VIBRATOR_SERVICE) as android.os.Vibrator
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
         buttonViewLogs!!.setOnClickListener(this)
@@ -76,6 +80,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startTimer()
             }
         } else if (v.id == R.id.btnStopTime){
+            vibe!!.vibrate(500)
             trackApneaTime()
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
@@ -105,6 +110,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_VOLUME_UP && mTimer != null && mTimerRunning) {
+            vibe!!.vibrate(500)
             trackApneaTime()
             return true
         }
