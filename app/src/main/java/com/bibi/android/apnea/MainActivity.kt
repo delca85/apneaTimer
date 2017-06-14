@@ -80,8 +80,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 time_in_minutes!!.isEnabled = false
                 time_in_seconds!!.isEnabled = false
                 series_in!!.isEnabled = false
-                remaining_series!!.visibility = View.VISIBLE
-                remaining_series_text!!.visibility = View.VISIBLE
                 series_stored.clear()
                 startTimer()
             }
@@ -94,20 +92,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.btnReset){
             if (mTimer != null)
                 mTimer!!.cancel()
+            go_home_progress?.progress = 0F
             remaining_time?.text = "00:00"
-            remaining_series!!.visibility = View.VISIBLE
-            remaining_series_text!!.visibility = View.VISIBLE
-            time_in_minutes!!.visibility = View.VISIBLE
-            time_in_seconds!!.visibility = View.VISIBLE
+            remaining_series!!.text = "1"
             time_in_minutes!!.setText("00")
             time_in_seconds!!.setText("00")
             time_in_minutes!!.isEnabled = true
             time_in_seconds!!.isEnabled = true
-            time_text!!.visibility = View.VISIBLE
-            separator!!.visibility = View.VISIBLE
-            series_in!!.visibility = View.VISIBLE
+            series_in!!.setText("1")
             series_in!!.isEnabled = true
-            series_number_text!!.visibility = View.VISIBLE
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
             buttonViewLogs!!.visibility = View.GONE
