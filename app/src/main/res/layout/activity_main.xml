@@ -56,7 +56,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include
-        layout="@layout/fragment_timer"/>
+    <include layout="@layout/fragment_timer" />
 
 </LinearLayout>
