@@ -14,6 +14,14 @@
         android:layout_height="116dp"
         android:theme="@style/ThemeOverlay.AppCompat.Light">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,9 +32,9 @@
             <Button
                 android:id="@+id/btnStartTime"
                 android:layout_width="match_parent"
-                android:layout_height="95dp"
+                android:layout_height="114dp"
                 android:layout_margin="5dp"
-                android:layout_weight="5.33"
+                android:layout_weight="9.57"
                 android:background="@drawable/button"
                 android:gravity="center"
                 android:text="Start Timer" />

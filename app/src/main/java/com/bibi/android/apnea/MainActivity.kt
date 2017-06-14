@@ -10,20 +10,18 @@ import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
+import android.view.*
 import android.widget.*
 import com.bibi.android.apnea.utils.getMillis
 import com.bibi.android.apnea.utils.getPercentLeft
 import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
+import android.support.v7.widget.Toolbar
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var mTimer: CountDownTimer? = null
 
-    var mainLayout: RelativeLayout? = null
+    var toolbar: Toolbar? = null
 
     var buttonStartTime: Button? = null
     var buttonStopTime: Button? = null
@@ -52,10 +50,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
 
         bindViews()
 
+        setSupportActionBar(toolbar)
         vibe = getSystemService(android.content.Context.VIBRATOR_SERVICE) as android.os.Vibrator
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)
@@ -63,6 +63,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         buttonReset!!.setOnClickListener(this)
 
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
     }
 
     override fun onClick(v: View?) {
@@ -153,7 +158,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun bindViews() {
-        mainLayout = findViewById(R.id.fragmentLayout) as RelativeLayout
+        toolbar = findViewById(R.id.toolbar) as Toolbar
         time_in_minutes = findViewById(R.id.time_in_minutes) as EditText
         time_in_seconds = findViewById(R.id.time_in_seconds) as EditText
         time_text = findViewById(R.id.textViewTime) as TextView

@@ -57,4 +57,8 @@ class DisplayLogActivity: AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
 }
