@@ -17,5 +17,5 @@
         </activity>
         <activity android:name="com.bibi.android.apnea.DisplayLogActivity"/>
     </application>
-
+    <uses-permission android:name="android.permission.PREVENT_VOLUME_UP" />
 </manifest>

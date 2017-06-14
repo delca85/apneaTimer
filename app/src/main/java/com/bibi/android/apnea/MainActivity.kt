@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
@@ -73,14 +74,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startTimer()
             }
         } else if (v.id == R.id.btnStopTime){
-            var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
-                    remaining_time!!.text.toString().split(":")[1])
-            var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
-            series_stored.add(pairToBeAdded as Pair<Long, Long>)
-            Toast.makeText(applicationContext, "Apnea time stored!",
-                    Toast.LENGTH_LONG).show()
-            if (numberOfSeries == 1)
-                finishSeries()
+            trackApneaTime()
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startActivity(ViewLogsIntent(series_stored))
@@ -105,6 +99,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             buttonStopTime!!.visibility = View.GONE
             buttonViewLogs!!.visibility = View.GONE
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            trackApneaTime()
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    private fun trackApneaTime() {
+        var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
+                remaining_time!!.text.toString().split(":")[1])
+        var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
+        series_stored.add(pairToBeAdded as Pair<Long, Long>)
+        Toast.makeText(applicationContext, "Apnea time stored!",
+                Toast.LENGTH_LONG).show()
+        if (numberOfSeries == 1)
+            finishSeries()
     }
 
     private fun finishSeries() {
