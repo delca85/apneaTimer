@@ -137,10 +137,22 @@
         android:text="Reset"
         android:id="@+id/btnReset"
         android:background="@drawable/button"
-        android:layout_marginBottom="19dp"
+        android:layout_marginBottom="13dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textViewSeries"
-        android:layout_toStartOf="@+id/textViewSeries" />
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/btnLog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="View Logs"
+        android:layout_alignBaseline="@+id/btnReset"
+        android:layout_alignBottom="@+id/btnReset"
+        android:layout_toRightOf="@+id/series_in_number"
+        android:layout_toEndOf="@+id/series_in_number"
+        android:visibility="gone"/>
 
 
 

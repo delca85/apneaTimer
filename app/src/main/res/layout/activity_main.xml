@@ -17,10 +17,8 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:background="#000"
-            android:minHeight="?attr/actionBarSize"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+            app:theme="@style/ToolbarTheme"
+            android:minHeight="?attr/actionBarSize"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -43,23 +41,13 @@
         <Button
             android:id="@+id/btnStopTime"
             android:layout_width="match_parent"
-            android:layout_height="95dp"
-            android:layout_margin="5dp"
-            android:layout_weight="5.33"
+            android:layout_height="86dp"
+            android:layout_marginTop="0dp"
             android:background="@drawable/button"
             android:gravity="center"
             android:text="Breath!"
             android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btnLog"
-            android:layout_width="wrap_content"
-            android:layout_height="83dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/button"
-            android:gravity="center"
-            android:text="View Logs"
-            android:visibility="gone" />
     </LinearLayout>
 
 
