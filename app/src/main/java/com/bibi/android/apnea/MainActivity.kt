@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.RingtoneManager
 import android.media.ToneGenerator
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -218,23 +217,30 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun startTimer() {
         go_home_progress!!.color = Color.parseColor("#00e1fe")
-        var toBePlayed = true
+        var toBePlayedTen = true
+        var toBePlayedThree = true
         var series_executed = 0
         mTimerRunning = true
 
-        mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 500) {
+        mTimer = object : CountDownTimer(totalTimeCountMilliseconds!!, 250) {
 
             override fun onTick(millisUntilFinished: Long) {
                 if (millisUntilFinished <= 11000  && totalTimeCountMilliseconds!!.compareTo(10000) > 0
-                        && toBePlayed && !remaining_series!!.text.equals("1")){
-                    val notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)
+                        && toBePlayedTen && !remaining_series!!.text.equals("1")){
                     val mp = MediaPlayer.create(applicationContext, R.raw.ten)
                     mp.start()
                     Handler().postDelayed({
                         mp.stop()
                     }, 2000)
-                    toBePlayed = false
+                    toBePlayedTen = false
                 }
+                if (millisUntilFinished <= 3000  && totalTimeCountMilliseconds!!.compareTo(3000) > 0
+                        && toBePlayedThree && !remaining_series!!.text.equals("1")){
+                    val mp = MediaPlayer.create(applicationContext, R.raw.countdown_three_seconds)
+                    mp.start()
+                    toBePlayedThree = false
+                }
+
                 remaining_time?.text = toReadableTime(millisUntilFinished)
                 remaining_series?.text = numberOfSeries.toString()
                 go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished-500,
@@ -246,18 +252,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
-                val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
-                toBePlayed = true
+                toBePlayedTen = true
 
                 series_executed++
 
                 if (series_stored.size < series_executed)
                     series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
 
-                if (numberOfSeries > 0) {
+                if (numberOfSeries > 0)
                     this.start()
-                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
-                }
                 else
                     finishSeries()
             }
