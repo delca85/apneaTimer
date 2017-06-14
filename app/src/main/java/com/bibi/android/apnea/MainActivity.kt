@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         bindViews()
 
         setSupportActionBar(toolbar)
+
         vibe = getSystemService(android.content.Context.VIBRATOR_SERVICE) as android.os.Vibrator
         buttonStartTime!!.setOnClickListener(this)
         buttonStopTime!!.setOnClickListener(this)

@@ -137,22 +137,11 @@
         android:text="Reset"
         android:id="@+id/btnReset"
         android:background="@drawable/button"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="19dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/textViewRemainingSeries"
-        android:layout_toStartOf="@+id/textViewRemainingSeries" />
+        android:layout_toLeftOf="@+id/textViewSeries"
+        android:layout_toStartOf="@+id/textViewSeries" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="History"
-        android:id="@+id/btnHistory"
-        android:background="@drawable/button"
-        android:layout_alignBaseline="@+id/btnReset"
-        android:layout_alignBottom="@+id/btnReset"
-        android:layout_toRightOf="@+id/remaining_time"
-        android:layout_toEndOf="@+id/remaining_time"
-        android:layout_marginLeft="14dp"
-        android:layout_marginStart="14dp" />
+
 
 </RelativeLayout>

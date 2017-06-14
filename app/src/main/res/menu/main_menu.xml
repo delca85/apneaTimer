@@ -6,6 +6,7 @@
 
     <item android:id="@+id/Credits"
         compat:showAsAction="never"
-        android:title="Credits"></item>
+        android:title="Credits">
+    </item>
 
 </menu>
