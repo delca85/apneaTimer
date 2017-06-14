@@ -1,9 +1,6 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.Context
-import android.content.Intent
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
@@ -82,6 +79,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             series_stored.add(pairToBeAdded as Pair<Long, Long>)
             Toast.makeText(applicationContext, "Apnea time stored!",
                     Toast.LENGTH_LONG).show()
+            if (numberOfSeries == 1)
+                finishSeries()
         } else if (v.id == R.id.btnLog){
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startActivity(ViewLogsIntent(series_stored))
@@ -106,6 +105,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             buttonStopTime!!.visibility = View.GONE
             buttonViewLogs!!.visibility = View.GONE
         }
+    }
+
+    private fun finishSeries() {
+        if (mTimer != null)
+            mTimer!!.cancel()
+        buttonStopTime!!.visibility = View.GONE
+        buttonStartTime!!.visibility = View.VISIBLE
+        buttonViewLogs!!.visibility = View.VISIBLE
+        time_in_minutes!!.isEnabled = true
+        time_in_seconds!!.isEnabled = true
+        series_in!!.isEnabled = true
+        go_home_progress?.progress = 0F
+        val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
+        toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
+        showBravoDialog()
     }
 
     private fun bindViews() {
@@ -202,7 +216,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 toBePlayed = true
 
                 series_executed++
-                
+
                 if (series_stored != null && series_stored!!.size < series_executed)
                     series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
 
@@ -210,17 +224,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     this.start()
                     toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200)
                 }
-                else {
-                    buttonStopTime!!.visibility = View.GONE
-                    buttonStartTime!!.visibility = View.VISIBLE
-                    buttonViewLogs!!.visibility = View.VISIBLE
-                    time_in_minutes!!.isEnabled = true
-                    time_in_seconds!!.isEnabled = true
-                    series_in!!.isEnabled = true
-                    go_home_progress?.progress = 0F
-                    toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
-                    showBravoDialog()
-                }
+                else
+                    finishSeries()
             }
         }.start()
 
@@ -237,6 +242,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         super.onBackPressed()
+    }
+
+    override fun onResume() {
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        super.onResume()
     }
 
 }
