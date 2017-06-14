@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         } else if (v.id == R.id.btnReset){
             if (mTimer != null)
                 mTimer!!.cancel()
-            go_home_progress?.progress = 0F
+            go_home_progress?.setProgressWithAnimation(0F, 100)
             remaining_time?.text = "00:00"
             remaining_series!!.text = "1"
             time_in_minutes!!.setText("00")
@@ -104,6 +104,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             buttonStartTime!!.visibility = View.VISIBLE
             buttonStopTime!!.visibility = View.GONE
             buttonViewLogs!!.visibility = View.GONE
+
         }
     }
 
@@ -243,8 +244,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 remaining_time?.text = toReadableTime(millisUntilFinished)
                 remaining_series?.text = numberOfSeries.toString()
-                go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished-500,
-                        totalTimeCountMilliseconds!!), 500)
+                go_home_progress?.setProgressWithAnimation(getPercentLeft(millisUntilFinished-125,
+                        totalTimeCountMilliseconds!!), 250)
             }
 
             override fun onFinish() {
