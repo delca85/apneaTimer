@@ -112,14 +112,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun trackApneaTime() {
-        var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
-                remaining_time!!.text.toString().split(":")[1])
-        var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
-        series_stored.add(pairToBeAdded as Pair<Long, Long>)
-        Toast.makeText(applicationContext, "Apnea time stored!",
-                Toast.LENGTH_LONG).show()
-        if (numberOfSeries == 1)
-            finishSeries()
+        var seriesExecuted: Int = 0
+        if (series_in!!.text.toString().equals(""))
+            seriesExecuted = 1 - remaining_series!!.text.toString().toInt()
+        else
+            seriesExecuted = series_in!!.text.toString().toInt() - remaining_series!!.text.toString().toInt()
+        if (seriesExecuted + 1 > series_stored!!.size) {
+            var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
+                    remaining_time!!.text.toString().split(":")[1])
+            var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
+            series_stored.add(pairToBeAdded as Pair<Long, Long>)
+            Toast.makeText(applicationContext, "Apnea time stored!",
+                    Toast.LENGTH_LONG).show()
+            if (numberOfSeries == 1)
+                finishSeries()
+        }
     }
 
     private fun finishSeries() {
