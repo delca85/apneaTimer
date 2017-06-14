@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         app:cpb_background_progressbar_color="#0078fe"
         app:cpb_background_progressbar_width="20dp"
-        app:cpb_progressbar_color="@color/colorAccent"
+        app:cpb_progressbar_color="#00e1fe"
         app:cpb_progressbar_width="15dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />

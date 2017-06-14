@@ -2,6 +2,7 @@ package com.bibi.android.apnea
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
 import android.media.RingtoneManager
@@ -40,6 +41,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     var remaining_series: TextView? = null            //shows the series
     var remaining_series_text: TextView? = null
     var series_number_text: TextView? = null
+
     var go_home_progress: CircularProgressBar? = null
 
     var series_stored: ArrayList<Pair<Long, Long>> = ArrayList<Pair<Long, Long>>()     // in order to memoize info about all executed series
@@ -118,12 +120,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun trackApneaTime() {
-        var seriesExecuted: Int = 0
+        go_home_progress!!.color = Color.RED
+        var seriesExecuted: Int
         if (series_in!!.text.toString().equals(""))
             seriesExecuted = 1 - remaining_series!!.text.toString().toInt()
         else
             seriesExecuted = series_in!!.text.toString().toInt() - remaining_series!!.text.toString().toInt()
-        if (seriesExecuted + 1 > series_stored!!.size) {
+        if (seriesExecuted + 1 > series_stored.size) {
             var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
                     remaining_time!!.text.toString().split(":")[1])
             var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
@@ -215,6 +218,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTimer() {
+        go_home_progress!!.color = Color.parseColor("#00e1fe")
         var toBePlayed = true
         var series_executed = 0
         mTimerRunning = true
@@ -239,6 +243,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
+                go_home_progress!!.color = Color.parseColor("#00e1fe")
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
@@ -247,7 +252,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
                 series_executed++
 
-                if (series_stored != null && series_stored!!.size < series_executed)
+                if (series_stored.size < series_executed)
                     series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
 
                 if (numberOfSeries > 0) {
