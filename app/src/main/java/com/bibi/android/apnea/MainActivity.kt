@@ -1,6 +1,7 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
+import android.content.DialogInterface
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -296,6 +297,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var view = layoutInflater.inflate(R.layout.dialog_show_record, null)
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
+        alertDialogBuilder.setPositiveButton("Reset", {
+            dialog, which ->  System.out.println("AAAACIAO")})
         val alert = alertDialogBuilder.create()
         alert.show()
     }
