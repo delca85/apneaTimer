@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dialog_show_record"
+    android:theme="@style/DialogTheme">
+
+    <TextView
+        android:id="@+id/bravo_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Record"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/AppTheme"
+        android:id="@+id/recordTable"
+        android:layout_below="@+id/bravo_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="36dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:gravity="center"
+                android:text="Date"
+                android:textSize="15sp"
+                android:padding="15dp"/>
+
+            <TextView
+                android:gravity="center"
+                android:text="@string/apnea_time"
+                android:textSize="15sp"
+                android:padding="15dp"/>
+
+            <TextView
+                android:gravity="center"
+                android:text="@string/breath_time"
+                android:textSize="15sp"
+                android:padding="15dp"/>
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

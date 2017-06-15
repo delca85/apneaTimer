@@ -14,4 +14,9 @@
         android:title="About">
     </item>
 
+    <item android:id="@+id/record"
+        compat:showAsAction="never"
+        android:title="Show Record">
+    </item>
+
 </menu>

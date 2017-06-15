@@ -270,15 +270,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun showBravoDialog() {
-        val layoutInflater = LayoutInflater.from(this@MainActivity)
-        var view = layoutInflater.inflate(R.layout.activity_series_end, null)
-        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
-        alertDialogBuilder.setView(view)
-        val alert = alertDialogBuilder.create()
-        alert.show()
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
     }
@@ -292,6 +283,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (item!!.itemId){
             R.id.credits -> showCredits()
             R.id.about -> showVersion()
+            R.id.record -> showRecord()
             else -> return true
 
         }
@@ -299,8 +291,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
+    private fun showRecord() {
+        val layoutInflater = LayoutInflater.from(this@MainActivity)
+        var view = layoutInflater.inflate(R.layout.dialog_show_record, null)
+        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+        alertDialogBuilder.setView(view)
+        val alert = alertDialogBuilder.create()
+        alert.show()
+    }
+
     private fun showVersion() {
-        var versionCode = BuildConfig.VERSION_CODE
         var versionName = BuildConfig.VERSION_NAME
         window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         startActivity(AboutIntent(versionName))
@@ -310,6 +310,16 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun showCredits() {
         val layoutInflater = LayoutInflater.from(this@MainActivity)
         var view = layoutInflater.inflate(R.layout.credits_layout, null)
+        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+        alertDialogBuilder.setView(view)
+        val alert = alertDialogBuilder.create()
+        alert.show()
+    }
+
+
+    private fun showBravoDialog() {
+        val layoutInflater = LayoutInflater.from(this@MainActivity)
+        var view = layoutInflater.inflate(R.layout.dialog_series_ended, null)
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
         val alert = alertDialogBuilder.create()
