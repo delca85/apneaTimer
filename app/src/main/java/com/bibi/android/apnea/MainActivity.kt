@@ -90,9 +90,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
             startActivity(ViewLogsIntent(series_stored))
         } else if (v.id == R.id.btnReset){
+            go_home_progress?.setProgressWithAnimation(0F, 100)
             if (mTimer != null)
                 mTimer!!.cancel()
-            go_home_progress?.setProgressWithAnimation(0F, 100)
             remaining_time?.text = "00:00"
             remaining_series!!.text = "1"
             time_in_minutes!!.setText("00")
@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun trackApneaTime() {
-        go_home_progress!!.color = Color.RED
+        go_home_progress!!.color = Color.parseColor("#00e1fe")
         var seriesExecuted: Int
         if (series_in!!.text.toString().equals(""))
             seriesExecuted = 1 - remaining_series!!.text.toString().toInt()
@@ -217,7 +217,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun startTimer() {
-        go_home_progress!!.color = Color.parseColor("#00e1fe")
+        go_home_progress!!.color = Color.parseColor("#e80404")
         var toBePlayedTen = true
         var toBePlayedThree = true
         var series_executed = 0
@@ -249,11 +249,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
-                go_home_progress!!.color = Color.parseColor("#00e1fe")
+                go_home_progress!!.color = Color.parseColor("#e80404")
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
                 go_home_progress?.progress = 0F
                 toBePlayedTen = true
+                toBePlayedThree = true
 
                 series_executed++
 
@@ -286,5 +287,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onResume()
     }
+    
 
 }
