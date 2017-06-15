@@ -16,6 +16,7 @@
             </intent-filter>
         </activity>
         <activity android:name="com.bibi.android.apnea.DisplayLogActivity"/>
+        <activity android:name="com.bibi.android.apnea.AboutActivity"/>
     </application>
     <uses-permission android:name="android.permission.PREVENT_VOLUME_UP" />
     <uses-permission android:name="android.permission.VIBRATE" />

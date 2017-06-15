@@ -290,8 +290,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId){
-            R.id.credits ->
-                showCredits()
+            R.id.credits -> showCredits()
+            R.id.about -> showVersion()
             else -> return true
 
         }
@@ -299,14 +299,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    private fun showCredits(): Boolean {
+    private fun showVersion() {
+        var versionCode = BuildConfig.VERSION_CODE
+        var versionName = BuildConfig.VERSION_NAME
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        startActivity(AboutIntent(versionName))
+
+    }
+
+    private fun showCredits() {
         val layoutInflater = LayoutInflater.from(this@MainActivity)
         var view = layoutInflater.inflate(R.layout.credits_layout, null)
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
         val alert = alertDialogBuilder.create()
         alert.show()
-        return true
     }
 
 }

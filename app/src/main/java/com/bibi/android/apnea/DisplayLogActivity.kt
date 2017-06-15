@@ -3,7 +3,6 @@ package com.bibi.android.apnea
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
 import android.widget.TableLayout
@@ -55,10 +54,6 @@ class DisplayLogActivity: AppCompatActivity() {
                     TableLayout.LayoutParams.WRAP_CONTENT))
 
         }
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
     }
 
 }

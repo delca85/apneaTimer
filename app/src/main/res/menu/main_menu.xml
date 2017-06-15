@@ -4,9 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <item android:id="@+id/Credits"
+    <item android:id="@+id/credits"
         compat:showAsAction="never"
         android:title="Credits">
+    </item>
+
+    <item android:id="@+id/about"
+        compat:showAsAction="never"
+        android:title="About">
     </item>
 
 </menu>
