@@ -287,6 +287,26 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         super.onResume()
     }
-    
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.itemId){
+            R.id.credits ->
+                showCredits()
+            else -> return true
+
+        }
+        return true
+
+    }
+
+    private fun showCredits(): Boolean {
+        val layoutInflater = LayoutInflater.from(this@MainActivity)
+        var view = layoutInflater.inflate(R.layout.credits_layout, null)
+        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+        alertDialogBuilder.setView(view)
+        val alert = alertDialogBuilder.create()
+        alert.show()
+        return true
+    }
 
 }
