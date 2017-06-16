@@ -1,8 +1,6 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
 import android.graphics.Color
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -18,10 +16,7 @@ import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
 import com.bibi.android.apnea.utils.*
 import java.io.File
-import java.io.FileDescriptor.out
 import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.FileWriter
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -54,6 +49,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var mTimerRunning: Boolean = false
     var vibe: Vibrator? = null
+
+    val const_fileName = "apneaTimerRecord.txt"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -304,11 +301,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var view = layoutInflater.inflate(R.layout.dialog_show_record, null)
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
-
+        var tableLayout = view.findViewById(R.id.recordTable) as TableLayout
+        var record: String? = null
         try {
-            var record = File(filesDir.toString() + "/" + "apneaTimerRecord.txt").readText().
+            record = File(filesDir.toString() + "/" + const_fileName).readText().
                     replace("\n", "")
-            var tableLayout = view.findViewById(R.id.recordTable) as TableLayout
             val tr = TableRow(this)
             val date = TextView(this)
             val apneaTime = TextView(this)
@@ -337,9 +334,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         alertDialogBuilder.setPositiveButton("Reset", {
-            dialog, which ->  System.out.println("AAA" + File(filesDir.toString() + "/" + "apneaTimerRecord.txt").readText())})
+            dialog, which ->  removeFileAndLine(tableLayout)
+            if (record != null)
+                Toast.makeText(applicationContext, "Record deleted!",
+                    Toast.LENGTH_LONG).show()
+            else
+                Toast.makeText(applicationContext, "Nothing to be deleted!",
+                    Toast.LENGTH_LONG).show()})
         val alert = alertDialogBuilder.create()
         alert.show()
+    }
+
+    private fun removeFileAndLine(table: TableLayout) {
+        File(filesDir.toString() + "/" + const_fileName).deleteRecursively()
+        table.removeViewAt(table.childCount -1)
     }
 
     private fun showVersion() {
@@ -370,7 +378,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
 
     private fun writeRecord() {
-        var fileName = filesDir.toString() + "/" + "apneaTimerRecord.txt"
+        var fileName = filesDir.toString() + "/" + const_fileName
         var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
         var date = dateFormat.format(Date())
         try {
