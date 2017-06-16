@@ -6,7 +6,7 @@
     android:theme="@style/DialogTheme">
 
     <TextView
-        android:id="@+id/bravo_text"
+        android:id="@+id/record_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

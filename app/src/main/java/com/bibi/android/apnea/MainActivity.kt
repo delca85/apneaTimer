@@ -14,12 +14,9 @@ import android.os.Vibrator
 import android.support.v7.app.AppCompatActivity
 import android.view.*
 import android.widget.*
-import com.bibi.android.apnea.utils.getMillis
-import com.bibi.android.apnea.utils.getPercentLeft
-import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
-import com.bibi.android.apnea.utils.getBestApneaTime
+import com.bibi.android.apnea.utils.*
 import java.io.File
 import java.io.FileDescriptor.out
 import java.io.FileNotFoundException
@@ -307,6 +304,38 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var view = layoutInflater.inflate(R.layout.dialog_show_record, null)
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
+
+        try {
+            var record = File(filesDir.toString() + "/" + "apneaTimerRecord.txt").readText().
+                    replace("\n", "")
+            var tableLayout = view.findViewById(R.id.recordTable) as TableLayout
+            val tr = TableRow(this)
+            val date = TextView(this)
+            val apneaTime = TextView(this)
+            val breathTime = TextView(this)
+            val recordElements = record.split(" ")
+            date.text = recordElements[0] + " " + recordElements[1]
+            apneaTime.text = getStringFromMillis(recordElements[2].toLong())
+            breathTime.text = getStringFromMillis(recordElements[3].toLong())
+
+            date.gravity = Gravity.CENTER
+            apneaTime.gravity = Gravity.CENTER
+            breathTime.gravity = Gravity.CENTER
+
+            date.setTextColor(Color.parseColor("#00e1fe"))
+            apneaTime.setTextColor(Color.parseColor("#00e1fe"))
+            breathTime.setTextColor(Color.parseColor("#00e1fe"))
+
+            tr.addView(date)
+            tr.addView(apneaTime)
+            tr.addView(breathTime)
+            tableLayout.addView(tr, TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT,
+                    TableLayout.LayoutParams.WRAP_CONTENT))
+        } catch (e : FileNotFoundException) {
+            Toast.makeText(applicationContext, "No record stored yet!",
+                    Toast.LENGTH_LONG).show()
+        }
+
         alertDialogBuilder.setPositiveButton("Reset", {
             dialog, which ->  System.out.println("AAA" + File(filesDir.toString() + "/" + "apneaTimerRecord.txt").readText())})
         val alert = alertDialogBuilder.create()
@@ -342,7 +371,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun writeRecord() {
         var fileName = filesDir.toString() + "/" + "apneaTimerRecord.txt"
-        var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS")
+        var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm")
         var date = dateFormat.format(Date())
         try {
             var currentRecord = File(fileName).readText()

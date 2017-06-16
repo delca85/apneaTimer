@@ -6,7 +6,7 @@
     android:theme="@style/DialogTheme">
 
     <TextView
-        android:id="@+id/bravo_text"
+        android:id="@+id/record_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Record"
@@ -18,7 +18,7 @@
         android:layout_height="match_parent"
         style="@style/AppTheme"
         android:id="@+id/recordTable"
-        android:layout_below="@+id/bravo_text"
+        android:layout_below="@+id/record_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="36dp">
@@ -31,7 +31,7 @@
                 android:gravity="center"
                 android:text="Date"
                 android:textSize="15sp"
-                android:padding="15dp"/>
+                android:padding="20dp"/>
 
             <TextView
                 android:gravity="center"
