@@ -19,11 +19,14 @@ import com.bibi.android.apnea.utils.getPercentLeft
 import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
+import com.bibi.android.apnea.utils.getBestApneaTime
 import java.io.File
 import java.io.FileDescriptor.out
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.FileWriter
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var mTimer: CountDownTimer? = null
@@ -305,7 +308,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
         alertDialogBuilder.setView(view)
         alertDialogBuilder.setPositiveButton("Reset", {
-            dialog, which ->  System.out.println("AAAACIAO")})
+            dialog, which ->  System.out.println("AAA" + File(filesDir.toString() + "/" + "apneaTimerRecord.txt").readText())})
         val alert = alertDialogBuilder.create()
         alert.show()
     }
@@ -339,13 +342,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun writeRecord() {
         var fileName = filesDir.toString() + "/" + "apneaTimerRecord.txt"
+        var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss.SSS")
+        var date = dateFormat.format(Date())
         try {
-            System.out.println("AAA"+ File(fileName).readText())
+            var currentRecord = File(fileName).readText()
+            var apneaTime = currentRecord.split(" ")[2]
+            var breathTime = currentRecord.split(" ")[3]
+            var apneaBreath = getBestApneaTime(apneaTime, breathTime, series_stored)
+            if (!apneaBreath.split(" ")[0].equals(apneaTime))
+                File(fileName).printWriter().use{out -> out.println(
+                        date + " " + apneaBreath)}
         } catch (fileNotFound: FileNotFoundException){
-            File(fileName).printWriter().use{out -> out.println("ciao")}
-            System.out.println("BBB" + File(fileName).exists())
-
-
+            File(fileName).printWriter().use{out -> out.println(
+                    date + " " + getBestApneaTime("0", "0", series_stored))}
         }
     }
 

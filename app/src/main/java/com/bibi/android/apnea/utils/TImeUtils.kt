@@ -1,5 +1,8 @@
 package com.bibi.android.apnea.utils
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 
 fun getPercentLeft(timeLeftInMillis: Long, totalMillisTime: Long): Float {
     return timeLeftInMillis.toFloat() / totalMillisTime.toFloat() * 100
@@ -22,4 +25,16 @@ fun getStringFromMillis(millis: Long): String{
     var minutes = "%02d".format(millis/60000)
     var seconds = "%02d".format((millis / 1000) % 60)
     return minutes + ":" + seconds
+}
+
+fun getBestApneaTime(apneaTime: String, breathTime: String,
+                     todayTimes: List<Pair<Long, Long>>) : String {
+    var bestApneaTime = apneaTime.toLong()
+    var bestBreathTime = breathTime
+    for (apneaTime in todayTimes)
+        if (bestApneaTime < apneaTime.first) {
+            bestApneaTime = apneaTime.first
+            bestBreathTime = apneaTime.second.toString()
+        }
+    return bestApneaTime.toString() + " " + bestBreathTime
 }
