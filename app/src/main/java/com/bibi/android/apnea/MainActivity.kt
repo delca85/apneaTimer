@@ -1,6 +1,7 @@
 package com.bibi.android.apnea
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.media.AudioManager
@@ -18,6 +19,11 @@ import com.bibi.android.apnea.utils.getPercentLeft
 import com.bibi.android.apnea.utils.toReadableTime
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
+import java.io.File
+import java.io.FileDescriptor.out
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.FileWriter
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     var mTimer: CountDownTimer? = null
@@ -138,6 +144,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun finishSeries() {
+        writeRecord()
         mTimerRunning = false
         if (mTimer != null)
             mTimer!!.cancel()
@@ -327,6 +334,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         alertDialogBuilder.setView(view)
         val alert = alertDialogBuilder.create()
         alert.show()
+    }
+
+
+    private fun writeRecord() {
+        var fileName = filesDir.toString() + "/" + "apneaTimerRecord.txt"
+        try {
+            System.out.println("AAA"+ File(fileName).readText())
+        } catch (fileNotFound: FileNotFoundException){
+            File(fileName).printWriter().use{out -> out.println("ciao")}
+            System.out.println("BBB" + File(fileName).exists())
+
+
+        }
     }
 
 }
