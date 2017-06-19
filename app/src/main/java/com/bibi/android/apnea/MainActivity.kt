@@ -334,13 +334,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         alertDialogBuilder.setPositiveButton("Reset", {
-            dialog, which ->  removeFileAndLine(tableLayout)
-            if (record != null)
-                Toast.makeText(applicationContext, "Record deleted!",
+            dialog, which -> confirmationDialog(tableLayout, record)
+            })
+        val alert = alertDialogBuilder.create()
+    }
+
+    private fun  confirmationDialog(tableLayout: TableLayout, record: String?) {
+        val layoutInflater = layoutInflater
+        var view = layoutInflater.inflate(R.layout.confirmation_reset_dialog, null)
+        var alertDialogBuilder = AlertDialog.Builder(this@MainActivity)
+        alertDialogBuilder.setView(view)
+
+        alertDialogBuilder.setPositiveButton("Yes", {
+            dialog, which ->
+            if (record != null) {
+                removeFileAndLine(tableLayout)
+            Toast.makeText(applicationContext, "Record deleted!",
                     Toast.LENGTH_LONG).show()
+            }
             else
                 Toast.makeText(applicationContext, "Nothing to be deleted!",
-                    Toast.LENGTH_LONG).show()})
+                        Toast.LENGTH_LONG).show()})
+        alertDialogBuilder.setNegativeButton("No", {
+            dialog, which ->
+                Toast.makeText(applicationContext, "Nothing deleted!",
+                    Toast.LENGTH_LONG).show()
+        })
         val alert = alertDialogBuilder.create()
         alert.show()
     }
