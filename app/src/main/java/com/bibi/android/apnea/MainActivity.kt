@@ -15,6 +15,10 @@ import android.widget.*
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
 import com.bibi.android.apnea.utils.*
+import org.jetbrains.anko.db.insert
+import org.jetbrains.anko.db.parseSingle
+import org.jetbrains.anko.db.rowParser
+import org.jetbrains.anko.db.select
 import java.io.File
 import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
@@ -154,7 +158,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         go_home_progress?.progress = 0F
         val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
+        writeToDatabase()
         showBravoDialog()
+    }
+
+    private fun writeToDatabase() {
+        /*database.use {
+            insert("ApneaLog", "id" to "ciao", "apnea" to "03:02", "breath" to "01:00")
+        }*/
+
+        val parser = rowParser { id: String, apnea: String, breath: String ->
+            Triple(id, apnea, breath)
+        }
+
+        database.use {
+            select("ApneaLog", columns = *arrayOf("id", "apnea", "breath"))
+                    .whereArgs("id = 'ciao'").exec { System.out.println("AAA" + parseSingle(parser)) }
+        }
     }
 
     private fun bindViews() {
