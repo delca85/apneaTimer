@@ -332,7 +332,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             Toast.makeText(applicationContext, "No record stored yet!",
                     Toast.LENGTH_LONG).show()
         }
-
         alertDialogBuilder.setPositiveButton("Reset", {
             dialog, which -> confirmationDialog(tableLayout, record)
             })
