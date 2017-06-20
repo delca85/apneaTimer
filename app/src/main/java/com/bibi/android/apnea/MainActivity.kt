@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var todaySeriesDB: List<Triple<String, String, String>>? = null
 
         database.use {
-            select("ApneaLog", columns = *arrayOf("id", "apnea", "breath"))
+            select("ApneaLog")
                     .whereArgs("id LIKE '" + date!!.split(" ")[0] + "%'").exec {
                 todaySeriesDB = parseList(parser)
             }
@@ -189,7 +189,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 for ((date, apnea, breath) in series_stored)
                     insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
             }
-        
+
     }
 
     private fun bindViews() {
@@ -326,11 +326,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             R.id.credits -> showCredits()
             R.id.about -> showVersion()
             R.id.record -> showRecord()
+            R.id.graph -> showGraph()
             else -> return true
 
         }
         return true
 
+    }
+
+    private fun showGraph() {
+        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+        startActivity(ViewDBIntent())
     }
 
     private fun showRecord() {

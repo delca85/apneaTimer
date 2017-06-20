@@ -42,3 +42,8 @@ fun getBestApneaTime(apneaTime: String, breathTime: String,
         }
     return bestApneaTime.toString() + " " + bestBreathTime
 }
+
+fun fromStringToDate(dateString: String): Date{
+    val formatter = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+    return formatter.parse(dateString)
+}

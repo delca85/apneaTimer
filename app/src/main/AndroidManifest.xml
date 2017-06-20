@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.bibi.android.apnea">
 
+    <uses-permission android:name="android.permission.PREVENT_VOLUME_UP" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,18 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.bibi.android.apnea.MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.bibi.android.apnea.DisplayLogActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.bibi.android.apnea.AboutActivity"
+        <activity
+            android:name=".DisplayLogActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".AboutActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".GraphActivity"
             android:screenOrientation="portrait"/>
     </application>
-    <uses-permission android:name="android.permission.PREVENT_VOLUME_UP" />
-    <uses-permission android:name="android.permission.VIBRATE" />
+
 </manifest>

@@ -19,4 +19,9 @@
         android:title="Show Record">
     </item>
 
+    <item android:id="@+id/graph"
+        compat:showAsAction="never"
+        android:title="Show Graphs">
+    </item>
+
 </menu>
