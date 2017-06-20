@@ -181,15 +181,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         var bestApneaTimeDB: String? = null
         if (todaySeriesDB!!.size > 0) 
             bestApneaTimeDB = getBestApneaTime("0", "0", todaySeriesDB!!.map{(date, apnea, breath) ->
-                Triple(date, getMillis(apnea), getMillis(breath))})
+                Triple(date, apnea.toLong(), breath.toLong())})
+        val bestApneaTimeNow = getBestApneaTime("0", "0", series_stored)
+        if (bestApneaTimeDB == null || bestApneaTimeNow.split(" ")[0] > bestApneaTimeDB.split(" ")[0])
+            database.use {
+                delete("ApneaLog", "id LIKE '" + date!!.split(" ")[0] + "%'")
+                for ((date, apnea, breath) in series_stored)
+                    insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
+            }
         
-        database.use {
-            for ((date, apnea, breath) in series_stored)
-                insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
-        }
-
-
-
     }
 
     private fun bindViews() {
