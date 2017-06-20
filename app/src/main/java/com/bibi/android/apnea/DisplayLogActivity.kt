@@ -15,7 +15,7 @@ import com.bibi.android.apnea.utils.getStringFromMillis
  */
 
 
-fun Context.ViewLogsIntent(series_stored: ArrayList<Pair<Long, Long>>): Intent {
+fun Context.ViewLogsIntent(series_stored: ArrayList<Triple<String, Long, Long>>): Intent {
     return Intent(this, DisplayLogActivity::class.java).apply {
         putExtra(INTENT_LOGS_LIST, series_stored)
     }
@@ -24,12 +24,12 @@ fun Context.ViewLogsIntent(series_stored: ArrayList<Pair<Long, Long>>): Intent {
 private const val INTENT_LOGS_LIST = "logs_list"
 
 class DisplayLogActivity: AppCompatActivity() {
-    var series_list: ArrayList<Pair<Long, Long>>?  = null
+    var series_list: ArrayList<Triple<String, Long, Long>>?  = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_logs)
-        series_list = intent.getStringArrayListExtra(INTENT_LOGS_LIST) as ArrayList<Pair<Long, Long>>
+        series_list = intent.getStringArrayListExtra(INTENT_LOGS_LIST) as ArrayList<Triple<String, Long, Long>>
 
         populateTable()
     }
@@ -42,8 +42,8 @@ class DisplayLogActivity: AppCompatActivity() {
         var breathTime = Array(series_list!!.size, {TextView(this)})
         for (i in 1..series_list!!.size){
             nSeries[i-1].text = i.toString()
-            apneaTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).first)
-            breathTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).second)
+            apneaTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).second)
+            breathTime[i-1].text = getStringFromMillis(series_list!!.get(i-1).third)
             nSeries[i-1].gravity = Gravity.CENTER
             apneaTime[i-1].gravity = Gravity.CENTER
             breathTime[i-1].gravity = Gravity.CENTER

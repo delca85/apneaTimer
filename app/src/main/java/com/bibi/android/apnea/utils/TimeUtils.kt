@@ -28,13 +28,13 @@ fun getStringFromMillis(millis: Long): String{
 }
 
 fun getBestApneaTime(apneaTime: String, breathTime: String,
-                     todayTimes: List<Pair<Long, Long>>) : String {
+                     todayTimes: List<Triple<String, Long, Long>>) : String {
     var bestApneaTime = apneaTime.toLong()
     var bestBreathTime = breathTime
     for (apneaTime in todayTimes)
-        if (bestApneaTime < apneaTime.first) {
-            bestApneaTime = apneaTime.first
-            bestBreathTime = apneaTime.second.toString()
+        if (bestApneaTime < apneaTime.second) {
+            bestApneaTime = apneaTime.second
+            bestBreathTime = apneaTime.third.toString()
         }
     return bestApneaTime.toString() + " " + bestBreathTime
 }

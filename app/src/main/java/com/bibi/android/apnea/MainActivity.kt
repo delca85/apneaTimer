@@ -15,10 +15,7 @@ import android.widget.*
 import com.mikhaellopez.circularprogressbar.CircularProgressBar
 import android.support.v7.widget.Toolbar
 import com.bibi.android.apnea.utils.*
-import org.jetbrains.anko.db.insert
-import org.jetbrains.anko.db.parseSingle
-import org.jetbrains.anko.db.rowParser
-import org.jetbrains.anko.db.select
+import org.jetbrains.anko.db.*
 import java.io.File
 import java.io.FileNotFoundException
 import java.text.SimpleDateFormat
@@ -46,7 +43,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var go_home_progress: CircularProgressBar? = null
 
-    var series_stored: ArrayList<Pair<Long, Long>> = ArrayList<Pair<Long, Long>>()     // in order to memoize info about all executed series
+    var series_stored: ArrayList<Triple<String, Long, Long>> =
+            ArrayList<Triple<String, Long, Long>>()     // in order to memoize info about all executed series
 
     var totalTimeCountMilliseconds: Long? = null    //total countdown time
     var numberOfSeries: Int = 1                 //number of total series
@@ -126,6 +124,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun trackApneaTime() {
+        var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+        var date = dateFormat!!.format(Date())
         go_home_progress!!.color = Color.parseColor("#00e1fe")
         var seriesExecuted: Int
         if (series_in!!.text.toString().equals(""))
@@ -135,8 +135,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         if (seriesExecuted + 1 > series_stored.size) {
             var breathMillis = getMillis(remaining_time!!.text.toString().split(":")[0],
                     remaining_time!!.text.toString().split(":")[1])
-            var pairToBeAdded = Pair(totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
-            series_stored.add(pairToBeAdded as Pair<Long, Long>)
+            var tripleToBeAdded : Triple<String, Long?, Long> = Triple(date,
+                    totalTimeCountMilliseconds?.minus(breathMillis), breathMillis)
+            series_stored.add(tripleToBeAdded as Triple<String, Long, Long>)
             Toast.makeText(applicationContext, "Apnea time stored!",
                     Toast.LENGTH_LONG).show()
             if (numberOfSeries == 1)
@@ -158,14 +159,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         go_home_progress?.progress = 0F
         val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
-        writeToDatabase()
+//        writeToDatabase()
         showBravoDialog()
     }
 
     private fun writeToDatabase() {
-        /*database.use {
-            insert("ApneaLog", "id" to "ciao", "apnea" to "03:02", "breath" to "01:00")
-        }*/
+        var dateFormat: SimpleDateFormat? = null
+        var date: String? = null
+        database.use {
+            for ((first, second) in series_stored!!)
+                insert("ApneaLog", "id" to date, "apnea" to first, "breath" to second)
+        }
 
         val parser = rowParser { id: String, apnea: String, breath: String ->
             Triple(id, apnea, breath)
@@ -173,7 +177,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         database.use {
             select("ApneaLog", columns = *arrayOf("id", "apnea", "breath"))
-                    .whereArgs("id = 'ciao'").exec { System.out.println("AAA" + parseSingle(parser)) }
+                    .whereArgs("id LIKE '" + date!!.split(" ")[0] + "%'").exec {
+                for (queryResult in parseList(parser))
+                    System.out.println("AAA" + queryResult)}
         }
     }
 
@@ -274,6 +280,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun onFinish() {
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+                val date = dateFormat!!.format(Date())
                 go_home_progress!!.color = Color.parseColor("#e80404")
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
@@ -284,7 +292,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 series_executed++
 
                 if (series_stored.size < series_executed)
-                    series_stored.add(Pair(totalTimeCountMilliseconds!!, 0L))
+                    series_stored.add(Triple(date, totalTimeCountMilliseconds!!, 0L))
 
                 if (numberOfSeries > 0)
                     this.start()
