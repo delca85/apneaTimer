@@ -164,22 +164,32 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun writeToDatabase() {
-        database.use {
-            for ((date, apnea, breath) in series_stored)
-                insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
-        }
-
         val parser = rowParser { id: String, apnea: String, breath: String ->
             Triple(id, apnea, breath)
         }
         val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
         val date = dateFormat.format(Date())
+        var todaySeriesDB: List<Triple<String, String, String>>? = null
+
         database.use {
             select("ApneaLog", columns = *arrayOf("id", "apnea", "breath"))
                     .whereArgs("id LIKE '" + date!!.split(" ")[0] + "%'").exec {
-                for (queryResult in parseList(parser))
-                    System.out.println("AAA" + queryResult)}
+                todaySeriesDB = parseList(parser)
+            }
+
         }
+        var bestApneaTimeDB: String? = null
+        if (todaySeriesDB!!.size > 0) 
+            bestApneaTimeDB = getBestApneaTime("0", "0", todaySeriesDB!!.map{(date, apnea, breath) ->
+                Triple(date, getMillis(apnea), getMillis(breath))})
+        
+        database.use {
+            for ((date, apnea, breath) in series_stored)
+                insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
+        }
+
+
+
     }
 
     private fun bindViews() {
