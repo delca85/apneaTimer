@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun trackApneaTime() {
         var dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-        var date = dateFormat!!.format(Date())
+        var date = dateFormat.format(Date())
         go_home_progress!!.color = Color.parseColor("#00e1fe")
         var seriesExecuted: Int
         if (series_in!!.text.toString().equals(""))
@@ -159,22 +159,21 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         go_home_progress?.progress = 0F
         val toneG = ToneGenerator(AudioManager.STREAM_ALARM, 100)
         toneG.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 800)
-//        writeToDatabase()
+        writeToDatabase()
         showBravoDialog()
     }
 
     private fun writeToDatabase() {
-        var dateFormat: SimpleDateFormat? = null
-        var date: String? = null
         database.use {
-            for ((first, second) in series_stored!!)
-                insert("ApneaLog", "id" to date, "apnea" to first, "breath" to second)
+            for ((date, apnea, breath) in series_stored)
+                insert("ApneaLog", "id" to date, "apnea" to apnea, "breath" to breath)
         }
 
         val parser = rowParser { id: String, apnea: String, breath: String ->
             Triple(id, apnea, breath)
         }
-
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
+        val date = dateFormat.format(Date())
         database.use {
             select("ApneaLog", columns = *arrayOf("id", "apnea", "breath"))
                     .whereArgs("id LIKE '" + date!!.split(" ")[0] + "%'").exec {
@@ -281,7 +280,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
             override fun onFinish() {
                 val dateFormat = SimpleDateFormat("dd-MM-yyyy HH:mm:ss")
-                val date = dateFormat!!.format(Date())
+                val date = dateFormat.format(Date())
                 go_home_progress!!.color = Color.parseColor("#e80404")
                 numberOfSeries--
                 remaining_series!!.text = numberOfSeries.toString()
@@ -361,7 +360,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     Toast.LENGTH_LONG).show()
         }
         alertDialogBuilder.setPositiveButton("Reset", {
-            dialog, which -> confirmationDialog(tableLayout, record)
+            _, _ -> confirmationDialog(tableLayout, record)
             })
         val alert = alertDialogBuilder.create()
         alert.show()
@@ -374,7 +373,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         alertDialogBuilder.setView(view)
 
         alertDialogBuilder.setPositiveButton("Yes", {
-            dialog, which ->
+            _, _ ->
             if (record != null) {
                 removeFileAndLine(tableLayout)
             Toast.makeText(applicationContext, "Record deleted!",
@@ -384,7 +383,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 Toast.makeText(applicationContext, "Nothing to be deleted!",
                         Toast.LENGTH_LONG).show()})
         alertDialogBuilder.setNegativeButton("No", {
-            dialog, which ->
+            _, _ ->
                 Toast.makeText(applicationContext, "Nothing deleted!",
                     Toast.LENGTH_LONG).show()
         })
